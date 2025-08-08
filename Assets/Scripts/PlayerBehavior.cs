@@ -16,7 +16,11 @@ public class PlayerBehavior : MonoBehaviour
     /// Stores the current hazard the player detected.
     /// </summary>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     HazardBehaviour currentHazard = null;
+=======
+    BrokenLightBehaviour brokenLight = null;
+>>>>>>> Stashed changes
 =======
     BrokenLightBehaviour brokenLight = null;
 >>>>>>> Stashed changes
@@ -48,6 +52,7 @@ public class PlayerBehavior : MonoBehaviour
             if (hitObject.CompareTag("Hazard"))
             {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 if (currentHazard != null)
                 {
                     // if the current hazrd is not null, unhighlight it
@@ -65,6 +70,8 @@ public class PlayerBehavior : MonoBehaviour
                 currentHazard.UnHighlight();
                 currentHazard = null; // Set currentHazard to null
 =======
+=======
+>>>>>>> Stashed changes
                 if (brokenLight != null)
                 {
                     // if the brokenLight is not null, unhighlight it
@@ -81,6 +88,9 @@ public class PlayerBehavior : MonoBehaviour
                 // If the raycast does not hit a hazard, unhighlight the current hazard
                 brokenLight.UnHighlight();
                 brokenLight = null; // Set brokenLight to null
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
                 canInteract = false; // Set canInteract to false
             }
@@ -89,15 +99,21 @@ public class PlayerBehavior : MonoBehaviour
         else
         {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             if (currentHazard != null)
             {
                 currentHazard.UnHighlight();
                 currentHazard = null; // Set currentHazard to null
 =======
+=======
+>>>>>>> Stashed changes
             if (brokenLight != null)
             {
                 brokenLight.UnHighlight();
                 brokenLight = null; // Set brokenLight to null
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
             }
             canInteract = false; // Set canInteract to false
@@ -111,17 +127,23 @@ public class PlayerBehavior : MonoBehaviour
         {
             //Check if player has detected hazard
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             if (currentHazard != null)
             {
                 Debug.Log("Interacting with hazard: " + currentHazard.gameObject.name);
                 // Call the method to fix hazard
                 currentHazard.FixHazard();
 =======
+=======
+>>>>>>> Stashed changes
             if (brokenLight != null)
             {
                 Debug.Log("Interacting with hazard: " + brokenLight.gameObject.name);
                 // Call the method to fix hazard
                 brokenLight.FixHazard();
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
             }
         }
