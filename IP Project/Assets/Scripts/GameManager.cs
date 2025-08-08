@@ -1,8 +1,18 @@
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    /// <summary>
+    /// The singleton instance of the GameManager.
+    /// </summary>
     public static GameManager instance;
+
+    /// <summary>
+    /// Canvas UI for the player.
+    /// </summary>
+    public Canvas playerUI;
+
     private void Awake()
     {
         // This is LAZY singleton
@@ -18,5 +28,21 @@ public class GameManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
+    }
+
+    // Method to show interact message
+    public void ShowInteractMsg()
+    {
+        // Show the interact menu UI
+        playerUI.gameObject.SetActive(true);
+        Debug.Log("Interact message shown");
+    }
+
+    // Method to hide interact message
+    public void HideInteractMsg()
+    {
+        // Hide the interact menu UI
+        playerUI.gameObject.SetActive(false);
+        Debug.Log("Interact message hidden");
     }
 }

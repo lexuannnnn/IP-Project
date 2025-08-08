@@ -5,11 +5,12 @@ public class MenuBehaviour : MonoBehaviour
     public void Play()
     {
         // Start the game
-        SceneManager.LoadSceneAsync(1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void Quit()
     {
+        Debug.Log("Quit");
         // Quit the application
         Application.Quit();
     }

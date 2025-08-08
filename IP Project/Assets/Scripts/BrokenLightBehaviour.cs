@@ -3,24 +3,24 @@ using UnityEngine;
 public class BrokenLightBehaviour : MonoBehaviour
 {
     /// <summary>
-    /// Reference to the MeshRenderer component for changing the hazard's material.
+    /// Reference to the MeshRenderer component for changing the light's material.
     /// </summary>
-    MeshRenderer myMeshRenderer;
+    MeshRenderer lightMeshRenderer;
     /// <summary>
-    /// Material to apply when the hazard is targeted.
+    /// Material to apply when the light is targeted.
     /// </summary>
     [SerializeField]
-    Material highlightMaterial;
+    Material highlightLightMaterial;
     /// <summary>
-    /// Material to apply when the hazard is not targeted.
+    /// Material to apply when the light is not targeted.
     /// </summary>
-    Material originalMaterial;
+    Material lightOriginalMaterial;
 
     /// <summary>
-    /// Fixed hazard
+    /// Fixed light
     /// </summary>
     [SerializeField]
-    GameObject fixedHazard;
+    GameObject fixedLight;
 
     /// <summary>
     /// Access AudioManager instance
@@ -36,41 +36,45 @@ public class BrokenLightBehaviour : MonoBehaviour
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
 
         // Get the MeshRenderer component attached to this GameObject
-        // Store it in myMeshRenderer
-        myMeshRenderer = GetComponent<MeshRenderer>();
+        // Store it in lightMeshRenderer
+        lightMeshRenderer = GetComponent<MeshRenderer>();
         // Store the original material of the MeshRenderer
-        originalMaterial = myMeshRenderer.material;
+        lightOriginalMaterial = lightMeshRenderer.material;
     }
 
     /// <summary>
     /// Highlights the hazard by changing its material.
     /// </summary>
-    public void Highlight()
+    public void HighlightLight()
     {
-        myMeshRenderer.material = highlightMaterial;
+        lightMeshRenderer.material = highlightLightMaterial;
     }
     /// <summary>
     /// Removes the highlight from the hazard by restoring its original material.
     /// </summary>
-    public void UnHighlight()
+    public void UnHighlightLight()
     {
         // Restore the original material of the MeshRenderer
-        myMeshRenderer.material = originalMaterial;
-    }
-    public void FixHazard()
-    {
-        if (fixedHazard != null)
-        {
-            // Instantiate the fixed hazard at the current position and rotation of this GameObject
-            Instantiate(fixedHazard, transform.position, transform.rotation);
-        }
-        Destroy(gameObject); // Destroy the hazard after fixing it
+        lightMeshRenderer.material = lightOriginalMaterial;
     }
 
     /// <summary>
-    /// Plays sound effect for the hazard.
+    /// Fixes the light by replacing it with a new one.
     /// </summary>
-    public void PlayHazardSound()
+    public void FixLight()
+    {
+        if (fixedLight != null)
+        {
+            // Instantiate the fixed light at the current position and rotation of this GameObject
+            Instantiate(fixedLight, transform.position, transform.rotation);
+        }
+        Destroy(gameObject); // Destroy the light after fixing it
+    }
+
+    /// <summary>
+    /// Plays sound effect for the light.
+    /// </summary>
+    public void PlayLightSound()
     {
         audioManager.PlaySFX(audioManager.brokenLight);
     }

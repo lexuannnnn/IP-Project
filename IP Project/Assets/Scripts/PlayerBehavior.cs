@@ -17,6 +17,10 @@ public class PlayerBehavior : MonoBehaviour
     /// </summary>
     BrokenLightBehaviour brokenLight = null;
     /// <summary>
+    /// Stores the current rubbish the player detected.
+    /// </summary>
+    RubbishBehaviour currentRubbish = null;
+    /// <summary>
     /// The point from which the player will interact with objects.
     /// </summary>
     [SerializeField]
@@ -26,11 +30,6 @@ public class PlayerBehavior : MonoBehaviour
     /// </summary>
     [SerializeField]
     float interactionDistance = 5f;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
 
     // Update is called once per frame
     void Update()
@@ -43,48 +42,110 @@ public class PlayerBehavior : MonoBehaviour
             // Check if the raycast is hitting an object with the "Hazard" tag
             if (hitObject.CompareTag("Hazard"))
             {
-                if (brokenLight != null)
-                {
-                    // if the brokenLight is not null, unhighlight it
-                    brokenLight.UnHighlight();
-                }
-                // Set canInteract flag to true
-                //Get the BrokenLightBehaviour component from the detected object
-                canInteract = true;
-                brokenLight = hitObject.GetComponent<BrokenLightBehaviour>();
-                brokenLight.Highlight(); // Highlight hazard
+                HandleLightDetection(hitObject);
             }
-            else if (brokenLight != null)
+            // Check if raycast is hitting an object with the "Rubbish" tag
+            else if (hitObject.CompareTag("Rubbish"))
             {
-                // If the raycast does not hit a hazard, unhighlight the current hazard
-                brokenLight.UnHighlight();
-                brokenLight = null; // Set brokenLight to null
-                canInteract = false; // Set canInteract to false
+                HandleRubbishDetection(hitObject);
+            }
+            else
+            {
+                // Hit something else, clear all interactions
+                ClearAllInteractions();
             }
         }
-        // For when the raycast is not hitting any hazard
         else
         {
-            if (brokenLight != null)
-            {
-                brokenLight.UnHighlight();
-                brokenLight = null; // Set brokenLight to null
-            }
-            canInteract = false; // Set canInteract to false
+            // Raycast didn't hit anything, clear all interactions
+            ClearAllInteractions();
         }
     }
 
+    void HandleLightDetection(GameObject hitObject)
+    {
+        BrokenLightBehaviour newBrokenLight = hitObject.GetComponent<BrokenLightBehaviour>();
+
+        // If we're looking at a different broken light, unhighlight the previous one
+        if (brokenLight != null && brokenLight != newBrokenLight)
+        {
+            brokenLight.UnHighlightLight();
+        }
+
+        // Clear rubbish if we were looking at any
+        if (currentRubbish != null)
+        {
+            currentRubbish.UnHighlightRubbish();
+            currentRubbish = null;
+        }
+
+        // Set up new interaction
+        canInteract = true;
+        brokenLight = newBrokenLight;
+        brokenLight.HighlightLight();
+        // Show interact message
+        GameManager.instance.ShowInteractMsg();
+    }
+
+    void HandleRubbishDetection(GameObject hitObject)
+    {
+        if (currentRubbish != null)
+        {
+            // If current rubbish is not null, unhighlight it
+            currentRubbish.UnHighlightRubbish();
+        }
+        // Clear broken light if we were looking at any
+        if (brokenLight != null)
+        {
+            brokenLight.UnHighlightLight();
+            brokenLight = null;
+        }
+        // Set canInteract to true
+        // Get RubbishBehaviour component from detected object
+        canInteract = true;
+        currentRubbish = hitObject.GetComponent<RubbishBehaviour>();
+        currentRubbish.HighlightRubbish();
+        // Show interact message
+        GameManager.instance.ShowInteractMsg();
+    }
+
+    void ClearAllInteractions()
+    {
+        if (brokenLight != null)
+        {
+            brokenLight.UnHighlightLight();
+            brokenLight = null;
+        }
+
+        if (currentRubbish != null)
+        {
+            currentRubbish.UnHighlightRubbish();
+            currentRubbish = null;
+        }
+
+        canInteract = false;
+        // Hide interact message
+        GameManager.instance.HideInteractMsg();
+    }
     void OnInteract()
     {
         //Check if the player can interact 
         if (canInteract)
         {
-            //Check if player has detected hazard
+            //Check if player has detected broken light
             if (brokenLight != null)
             {
-                Debug.Log("Interacting with hazard: " + brokenLight.gameObject.name);
-                // Call the method to fix hazard
-                brokenLight.FixHazard();
+                Debug.Log("Interacting with light: " + brokenLight.gameObject.name);
+                // Call the method to fix light
+                brokenLight.FixLight();
+            }
+            // Check if player has detected rubbish
+            else if (currentRubbish != null)
+            {
+                Debug.Log("Interacting with rubbish: " + currentRubbish.gameObject.name);
+                // Call the method to pick up rubbish
+                currentRubbish.PickUpRubbish();
+                
             }
         }
     }

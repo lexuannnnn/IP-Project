@@ -18,6 +18,7 @@ public class CarBehaviour : MonoBehaviour
     // Destroy the car 
     void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Car collided with: " + other.name);
         if (other.CompareTag("DeadZone"))
         {
             Debug.Log("Car deleted");
