@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:IP Project/Assets/TextMesh Pro/Examples & Extras/Textures/Small Crate_normal.jpg.meta
 guid: 8878a782f4334ecbbcf683b3ac780966
+=======
+guid: b36001bfef64d634088bc5f3d26a2d19
+>>>>>>> 995d18ecf15efb0a672ebe0fd8a0d1f8d19009ae:IP Project/Assets/Models/buildingRed.fbm/textureAtlas.png.meta
 TextureImporter:
   fileIDToRecycleName: {}
   externalObjects: {}

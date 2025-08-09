@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:IP Project/Assets/TextMesh Pro/Examples & Extras/Textures/Sunny Days - Seamless.jpg.meta
 guid: 17c350171f7a3ca479f830547c66d187
+=======
+guid: ce242de19cae08c499d5a834b7550f7e
+>>>>>>> 995d18ecf15efb0a672ebe0fd8a0d1f8d19009ae:IP Project/Assets/Models/blueCar.fbm/textureAtlas.png.meta
 TextureImporter:
   fileIDToRecycleName: {}
   externalObjects: {}
