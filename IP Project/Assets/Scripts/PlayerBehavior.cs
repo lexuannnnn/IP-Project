@@ -12,6 +12,7 @@ public class PlayerBehavior : MonoBehaviour
     /// Flag to check if the player can interact with objects.
     /// </summary>
     bool canInteract = false;
+
     /// <summary>
     /// Stores the current hazard the player detected.
     /// </summary>
@@ -31,9 +32,14 @@ public class PlayerBehavior : MonoBehaviour
     [SerializeField]
     float interactionDistance = 5f;
 
+    // [SerializeField]
+    // bool inputEnabled = true;
+
     // Update is called once per frame
     void Update()
     {
+        // if (!inputEnabled) return; //Process input if enabled
+
         RaycastHit hitInfo;
         Debug.DrawRay(spawnPoint.position, spawnPoint.forward * interactionDistance, Color.magenta);
         if (Physics.Raycast(spawnPoint.position, spawnPoint.forward, out hitInfo, interactionDistance))
@@ -62,6 +68,10 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
 
+    // public void EnableInput(bool enable)
+    // {
+    //     inputEnabled = enable;
+    // }
     void HandleLightDetection(GameObject hitObject)
     {
         BrokenLightBehaviour newBrokenLight = hitObject.GetComponent<BrokenLightBehaviour>();
