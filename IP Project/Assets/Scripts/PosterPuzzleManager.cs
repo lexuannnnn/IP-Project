@@ -2,32 +2,18 @@ using UnityEngine;
 
 public class PosterPuzzleManager : MonoBehaviour
 {
-    public GameObject victoryScreen;  // Assign your victory screen panel here
-    public int totalPieces;           // Set in Inspector to the number of puzzle pieces
+    public int totalPieces = 4;
     private int placedPieces = 0;
-
-    private void Start()
-    {
-        if (victoryScreen != null)
-            victoryScreen.SetActive(false);
-    }
+    public GameObject victoryPanel;
 
     public void PiecePlaced()
     {
         placedPieces++;
-
-        Debug.Log("Piece placed! Total: " + placedPieces);
-
         if (placedPieces >= totalPieces)
         {
-            ShowVictoryScreen();
+            Debug.Log("Puzzle Completed!");
+            if (victoryPanel != null)
+                victoryPanel.SetActive(true);
         }
-    }
-
-    private void ShowVictoryScreen()
-    {
-        Debug.Log("Victory! Puzzle completed!");
-        if (victoryScreen != null)
-            victoryScreen.SetActive(true);
     }
 }
