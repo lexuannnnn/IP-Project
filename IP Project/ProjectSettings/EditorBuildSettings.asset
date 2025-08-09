@@ -4,6 +4,7 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
+<<<<<<< Updated upstream
   m_Scenes:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
@@ -16,4 +17,8 @@ EditorBuildSettings:
     guid: 52749a3002b8ed34bb6f7696b0dac4d1
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+=======
+  m_Scenes: []
+  m_configObjects: {}
+>>>>>>> Stashed changes
   m_UseUCBPForAssetBundles: 0
