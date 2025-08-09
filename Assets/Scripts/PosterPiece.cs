@@ -1,42 +1,68 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class PuzzlePiece : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class PosterPiece : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    public RectTransform correctSlot;   // Assign the matching slot RectTransform in Inspector
+    public Canvas canvas;               // Assign your Canvas here
+
     private RectTransform rectTransform;
-    private Canvas canvas;
-    private Vector3 startPosition;
-    public RectTransform correctSlot;
+    private CanvasGroup canvasGroup;
+
+    private Vector2 originalPosition;
+    private bool placed = false;
 
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
-        canvas = GetComponentInParent<Canvas>();
-        startPosition = rectTransform.position;
+        canvasGroup = GetComponent<CanvasGroup>();
+        originalPosition = rectTransform.anchoredPosition;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        startPosition = rectTransform.position;
+        if (placed) return;
+
+        canvasGroup.alpha = 0.6f;          // Make piece semi-transparent while dragging
+        canvasGroup.blocksRaycasts = false;  // So raycasts pass through while dragging
     }
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (placed) return;
+
+        // Move piece with pointer, adjusted by canvas scale
         rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        // Check distance between piece and slot
-        if (Vector3.Distance(rectTransform.position, correctSlot.position) < 50f)
+        if (placed) return;
+
+        // Check if close enough to correct slot to snap
+        float distance = Vector2.Distance(rectTransform.anchoredPosition, correctSlot.anchoredPosition);
+
+        if (distance < 50f)  // Snap threshold, adjust as needed
         {
-            rectTransform.position = correctSlot.position;
-            this.enabled = false; // Disable dragging once placed
+            rectTransform.anchoredPosition = correctSlot.anchoredPosition;
+            placed = true;
+
+            canvasGroup.alpha = 1f;
+            canvasGroup.blocksRaycasts = true;
+
+            // Notify puzzle manager a piece has been placed
+            PosterPuzzleManager manager = FindFirstObjectByType<PosterPuzzleManager>();
+            if (manager != null)
+            {
+                manager.PiecePlaced();
+            }
         }
         else
         {
-            // Return to start if not in correct position
-            rectTransform.position = startPosition;
+            // Return piece to original position if not close enough
+            rectTransform.anchoredPosition = originalPosition;
+            canvasGroup.alpha = 1f;
+            canvasGroup.blocksRaycasts = true;
         }
     }
 }
