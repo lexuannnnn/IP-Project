@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,9 +14,17 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public Canvas playerUI;
 
+
+    // /// <summary>
+    // /// The player object in the game.
+    // /// </summary>
+    // [SerializeField]
+    // PlayerBehavior player;
+
+
     private void Awake()
     {
-        // This is LAZY singleton
+        // LAZY singleton
         // Check if there is an instance of GameManager already
         if (instance != null && instance != this)
         {
@@ -45,4 +54,33 @@ public class GameManager : MonoBehaviour
         playerUI.gameObject.SetActive(false);
         Debug.Log("Interact message hidden");
     }
+
+    // void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    // {
+    //     Debug.Log("Scene loaded: " + scene.name);
+    //     // Check if the scene is the main menu
+    //     if (scene.name == "MainMenu")
+    //     {
+    //         if (player != null)
+    //         {
+    //             player.EnableInput(false);
+    //         }
+    //         else
+    //         {
+    //             player.EnableInput(true);
+    //         }
+    //     }
+    // }
+
+    // void OnEnable()
+    // {
+    //     // Subscribe to the scene loaded event
+    //     SceneManager.sceneLoaded += OnSceneLoaded;
+    // }
+
+    // void OnDisable()
+    // {
+    //     // Unsubscribe from the scene loaded event
+    //     SceneManager.sceneLoaded -= OnSceneLoaded;
+    // }
 }

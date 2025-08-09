@@ -3,9 +3,7 @@ using UnityEngine;
 
 public class CarSpawnBehaviour : MonoBehaviour
 {
-    public GameObject carPrefab1; // Prefab of the car to spawn
-    public GameObject carPrefab2; // Prefab of the car to spawn
-    public GameObject carPrefab3; // Prefab of the car to spawn
+    public GameObject[] carPrefabs; // Prefabs of the car to spawn
     public Transform[] spawnPoints; // Transform containing spawn points
     public float minSpawnInterval = 2f; // Minimum time interval between spawns
     public float maxSpawnInterval = 5f; // Maximum time interval between spawns
@@ -37,24 +35,11 @@ public class CarSpawnBehaviour : MonoBehaviour
         float randomInterval = Random.Range(minSpawnInterval, maxSpawnInterval);
         spawnInterval = randomInterval;
 
-        // Randomly select one of the car prefabs to spawn
-        GameObject selectedCarPrefab = carPrefab1;
-        int randomCar = Random.Range(1, 4);
-        switch (randomCar)
-        {
-            case 1:
-                selectedCarPrefab = carPrefab1;
-                break;
-            case 2:
-                selectedCarPrefab = carPrefab2;
-                break;
-            case 3:
-                selectedCarPrefab = carPrefab3;
-                break;
-        }
+        // Randomly select a car prefab to spawn
         int randomSpawnIndex = Random.Range(0, spawnPoints.Length);
         Transform selectedSpawnPoint = spawnPoints[randomSpawnIndex];
+        int carIndex = Random.Range(0, carPrefabs.Length);
         Debug.Log("Car spawned");
-        Instantiate(selectedCarPrefab, selectedSpawnPoint.position, transform.rotation);
+        Instantiate(carPrefabs[carIndex], selectedSpawnPoint.position, transform.rotation);
     }
 }

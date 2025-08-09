@@ -6,15 +6,20 @@ EditorBuildSettings:
   serializedVersion: 2
 <<<<<<< Updated upstream
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
+<<<<<<< HEAD
     path: Assets/Scenes/Main Menu.unity
     guid: 2f09d3fd18eb3e14c93043beba2a42c2
   - enabled: 1
     path: Assets/Scenes/outdoor.unity
     guid: 52749a3002b8ed34bb6f7696b0dac4d1
+  - enabled: 1
+    path: Assets/Scenes/Police.unity
+    guid: 3ccec01d711c981459d3614e9a61b435
+=======
+    path: Assets/Scenes/SampleScene.unity
+    guid: 99c9720ab356a0642a771bea13969a05
+>>>>>>> parent of 2fd969f (Merge branch 'SinEnCodes' into SinEnTestBranch)
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 =======
