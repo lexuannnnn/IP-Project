@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -6668665694399322400}
   - component: {fileID: 875579342286449454}
   - component: {fileID: -2936246640605748751}
+  - component: {fileID: 5132091987483072094}
   m_Layer: 0
   m_Name: RedCar
   m_TagString: Untagged
@@ -27,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8765199282306673553}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.8039992, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -97,6 +98,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &5132091987483072094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8765199282306673553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce6214be3c86b4247b31dd71dbec3b9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  topBound: 150
+  lowerBound: -90
 --- !u!1001 &5767260223605079423
 PrefabInstance:
   m_ObjectHideFlags: 0
