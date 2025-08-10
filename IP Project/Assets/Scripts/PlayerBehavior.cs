@@ -22,6 +22,10 @@ public class PlayerBehavior : MonoBehaviour
     /// </summary>
     RubbishBehaviour currentRubbish = null;
     /// <summary>
+    /// Stores the current wallet the player detected.
+    /// </summary>
+    WalletBehaviour currentWallet = null;
+    /// <summary>
     /// The point from which the player will interact with objects.
     /// </summary>
     [SerializeField]
@@ -54,6 +58,10 @@ public class PlayerBehavior : MonoBehaviour
             else if (hitObject.CompareTag("Rubbish"))
             {
                 HandleRubbishDetection(hitObject);
+            }
+            else if (hitObject.CompareTag("Wallet"))
+            {
+                HandleWalletDetection(hitObject);
             }
             else
             {
@@ -119,6 +127,33 @@ public class PlayerBehavior : MonoBehaviour
         GameManager.instance.ShowInteractMsg();
     }
 
+    void HandleWalletDetection(GameObject hitObject)
+    {
+        if (currentWallet != null)
+        {
+            // If current wallet is not null, unhighlight it
+            currentWallet.UnHighlightWallet();
+        }
+        // Clear broken light if we were looking at any
+        if (brokenLight != null)
+        {
+            brokenLight.UnHighlightLight();
+            brokenLight = null;
+        }
+        // Clear rubbish if we were looking at any
+        if (currentRubbish != null)
+        {
+            currentRubbish.UnHighlightRubbish();
+            currentRubbish = null;
+        }
+        // Set canInteract to true
+        canInteract = true;
+        currentWallet = hitObject.GetComponent<WalletBehaviour>();
+        currentWallet.HighlightWallet();
+        // Show interact message
+        GameManager.instance.ShowInteractMsg();
+    }
+
     void ClearAllInteractions()
     {
         if (brokenLight != null)
@@ -155,7 +190,13 @@ public class PlayerBehavior : MonoBehaviour
                 Debug.Log("Interacting with rubbish: " + currentRubbish.gameObject.name);
                 // Call the method to pick up rubbish
                 currentRubbish.PickUpRubbish();
-                
+
+            }
+            else if (currentWallet != null)
+            {
+                Debug.Log("Interacting with wallet: " + currentWallet.gameObject.name);
+                // Call the method to pick up wallet
+                currentWallet.PickUpWallet();
             }
         }
     }
