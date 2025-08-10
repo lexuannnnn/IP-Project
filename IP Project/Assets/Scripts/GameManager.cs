@@ -14,6 +14,23 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public Canvas playerUI;
 
+    /// <summary>
+    /// Total number of rubbish to collect.
+    /// </summary>
+    [SerializeField]
+    int totalRubbish = 2;
+
+    /// <summary>
+    /// Reference to the LevelLoader component.
+    /// </summary>
+    [SerializeField]
+    LevelLoader levelLoader;
+
+    /// <summary>
+    /// The build index of the target scene to load.
+    /// </summary>
+    [SerializeField]
+    int targetSceneIndex = 1;
 
     // /// <summary>
     // /// The player object in the game.
@@ -39,6 +56,31 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        //Count all rubbish objects in the scene
+        totalRubbish = GameObject.FindGameObjectsWithTag("Rubbish").Length;
+    }
+
+    public void RubbishCollected()
+    {
+        totalRubbish--;
+        Debug.Log("Rubbish collected! Remaining: " + totalRubbish);
+
+        if (totalRubbish <= 0)
+        {
+            // All rubbish collected, load next scene
+            Debug.Log("All rubbish collected!");
+            LoadNextScene();
+        }
+    }
+
+    private void LoadNextScene()
+    {
+        // Start the level loading coroutine
+        StartCoroutine(levelLoader.LoadLevel(targetSceneIndex));
+    }
+    
     // Method to show interact message
     public void ShowInteractMsg()
     {
@@ -54,6 +96,7 @@ public class GameManager : MonoBehaviour
         playerUI.gameObject.SetActive(false);
         Debug.Log("Interact message hidden");
     }
+
 
     // void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     // {
