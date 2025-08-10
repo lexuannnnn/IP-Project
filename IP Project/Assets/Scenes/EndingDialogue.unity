@@ -638,6 +638,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelLoader: {fileID: 1343143479}
   targetSceneIndex: 4
+  dialogueCanvas: {fileID: 1365291812}
   textComponent: {fileID: 237455408}
   nameComponent: {fileID: 913695872}
   sentences:
@@ -1194,6 +1195,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3867642252807195772, guid: f62c2b5e9d4fe114c83afcc2070e81f4, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 6779244801025691211, guid: f62c2b5e9d4fe114c83afcc2070e81f4, type: 3}
       propertyPath: m_Name
       value: LevelLoader
@@ -1206,6 +1211,10 @@ PrefabInstance:
       propertyPath: transition
       value: 
       objectReference: {fileID: 1417311665}
+    - target: {fileID: 6803645572028892297, guid: f62c2b5e9d4fe114c83afcc2070e81f4, type: 3}
+      propertyPath: transitionTime
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

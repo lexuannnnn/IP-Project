@@ -19,6 +19,12 @@ public class DialogueBehaviour : MonoBehaviour
     int targetSceneIndex = 1;
 
     /// <summary>
+    /// Reference to the dialogue canvas GameObject.
+    /// </summary>
+    [SerializeField]
+    GameObject dialogueCanvas;
+
+    /// <summary>
     /// Reference to the TextMeshProUGUI component for displaying dialogue.
     /// </summary>
     public TextMeshProUGUI textComponent;
@@ -66,7 +72,8 @@ public class DialogueBehaviour : MonoBehaviour
 
     IEnumerator DelayedStart()
     {
-        yield return null; // Wait for 1 frame
+        dialogueCanvas.SetActive(false); // Hide dialogue canvas initially
+        yield return new WaitForSeconds(1f); // Wait for 1 second before starting dialogue
         StartDialogue();
     }
 
@@ -89,6 +96,7 @@ public class DialogueBehaviour : MonoBehaviour
     }
     void StartDialogue()
     {
+        dialogueCanvas.SetActive(true); // Show dialogue canvas
         index = 0;
         UpdateNameDisplay();
         typingCoroutine = StartCoroutine(TypeSentence(sentences[index]));

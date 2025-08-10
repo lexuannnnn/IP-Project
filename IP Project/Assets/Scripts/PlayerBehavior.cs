@@ -89,14 +89,17 @@ public class PlayerBehavior : MonoBehaviour
         {
             brokenLight.UnHighlightLight();
         }
-
         // Clear rubbish if we were looking at any
         if (currentRubbish != null)
         {
             currentRubbish.UnHighlightRubbish();
             currentRubbish = null;
         }
-
+        // Clear wallet if we were looking at any
+        if (currentWallet != null)
+        {
+            currentWallet.UnHighlightWallet();
+        }
         // Set up new interaction
         canInteract = true;
         brokenLight = newBrokenLight;
@@ -117,6 +120,11 @@ public class PlayerBehavior : MonoBehaviour
         {
             brokenLight.UnHighlightLight();
             brokenLight = null;
+        }
+        // Clear wallet if we were looking at any
+        if (currentWallet != null)
+        {
+            currentWallet.UnHighlightWallet();
         }
         // Set canInteract to true
         // Get RubbishBehaviour component from detected object
@@ -166,6 +174,12 @@ public class PlayerBehavior : MonoBehaviour
         {
             currentRubbish.UnHighlightRubbish();
             currentRubbish = null;
+        }
+
+        if (currentWallet != null)
+        {
+            currentWallet.UnHighlightWallet();
+            currentWallet = null;
         }
 
         canInteract = false;
