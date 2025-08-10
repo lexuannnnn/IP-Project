@@ -618,7 +618,7 @@ GameObject:
   - component: {fileID: 267328622}
   - component: {fileID: 267328621}
   m_Layer: 0
-  m_Name: DialogueManager
+  m_Name: EndingDialogueManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

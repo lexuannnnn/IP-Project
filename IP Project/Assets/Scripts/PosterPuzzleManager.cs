@@ -2,6 +2,17 @@ using UnityEngine;
 
 public class PosterPuzzleManager : MonoBehaviour
 {
+    /// <summary>
+    /// Reference to the LevelLoader component.
+    /// </summary>
+    [SerializeField]
+    LevelLoader levelLoader;
+    /// <summary>
+    /// The build index of the target scene to load.
+    /// </summary>
+    [SerializeField]
+    int targetSceneIndex = 1;
+
     public GameObject victoryScreen;  // Assign your victory screen panel here
     public int totalPieces;           // Set in Inspector to the number of puzzle pieces
     private int placedPieces = 0;
@@ -29,5 +40,11 @@ public class PosterPuzzleManager : MonoBehaviour
         Debug.Log("Victory! Puzzle completed!");
         if (victoryScreen != null)
             victoryScreen.SetActive(true);
+    }
+
+    public void LoadNextLevel()
+    {
+        // Load the next level using LevelLoader
+        StartCoroutine(levelLoader.LoadLevel(targetSceneIndex));
     }
 }

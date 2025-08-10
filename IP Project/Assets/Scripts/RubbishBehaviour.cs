@@ -16,6 +16,7 @@ public class RubbishBehaviour : MonoBehaviour
     /// </summary>
     Material rubbishOriginalMaterial;
 
+
     /// <summary>
     /// Start is called once before the first execution of Update after the MonoBehaviour is created
     /// </summary>
@@ -49,6 +50,8 @@ public class RubbishBehaviour : MonoBehaviour
     /// </summary>
     public void PickUpRubbish()
     {
+        // Decrease the total rubbish count in GameManager
+        GameManager.instance.RubbishCollected();
         Destroy(gameObject); // Destroy the rubbish after picking it up
     }
 }

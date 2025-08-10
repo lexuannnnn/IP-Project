@@ -183,6 +183,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerUI: {fileID: 716081008029997464}
+  totalRubbish: 2
+  levelLoader: {fileID: 0}
+  targetSceneIndex: 3
 --- !u!1 &9149799357646023848
 GameObject:
   m_ObjectHideFlags: 0
