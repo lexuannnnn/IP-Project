@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Police.unity
     guid: 3ccec01d711c981459d3614e9a61b435
   - enabled: 1
+    path: Assets/Scenes/PoliceDialogue.unity
+    guid: c6d3b128601adc346937296ea965eedc
+  - enabled: 1
     path: Assets/Scenes/PosterDialogue.unity
     guid: 9fc121eea67d01c4ca478ccbaf7c193b
   - enabled: 1

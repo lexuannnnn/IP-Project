@@ -408,7 +408,7 @@ PrefabInstance:
       objectReference: {fileID: 536339268}
     - target: {fileID: 4839466037682646374, guid: 4f778a8708235644d848abae76b494c9, type: 3}
       propertyPath: targetSceneIndex
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8356671656204901806, guid: 4f778a8708235644d848abae76b494c9, type: 3}
       propertyPath: m_LocalScale.x
@@ -690,11 +690,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4792168919764879899, guid: 794e93b3ea970a64e83d22c993bed3e6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 45.920002
+      value: 0.19999981
       objectReference: {fileID: 0}
     - target: {fileID: 4792168919764879899, guid: 794e93b3ea970a64e83d22c993bed3e6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 60.7
+      value: -1.1885667
       objectReference: {fileID: 0}
     - target: {fileID: 4792168919764879900, guid: 794e93b3ea970a64e83d22c993bed3e6, type: 3}
       propertyPath: far clip plane
