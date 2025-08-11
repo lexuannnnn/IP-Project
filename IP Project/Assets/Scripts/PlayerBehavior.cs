@@ -22,6 +22,10 @@ public class PlayerBehavior : MonoBehaviour
     /// </summary>
     RubbishBehaviour currentRubbish = null;
     /// <summary>
+    /// Stores the current wallet the player detected.
+    /// </summary>
+    WalletBehaviour currentWallet = null;
+    /// <summary>
     /// The point from which the player will interact with objects.
     /// </summary>
     [SerializeField]
@@ -55,6 +59,10 @@ public class PlayerBehavior : MonoBehaviour
             {
                 HandleRubbishDetection(hitObject);
             }
+            else if (hitObject.CompareTag("Wallet"))
+            {
+                HandleWalletDetection(hitObject);
+            }
             else
             {
                 // Hit something else, clear all interactions
@@ -81,14 +89,17 @@ public class PlayerBehavior : MonoBehaviour
         {
             brokenLight.UnHighlightLight();
         }
-
         // Clear rubbish if we were looking at any
         if (currentRubbish != null)
         {
             currentRubbish.UnHighlightRubbish();
             currentRubbish = null;
         }
-
+        // Clear wallet if we were looking at any
+        if (currentWallet != null)
+        {
+            currentWallet.UnHighlightWallet();
+        }
         // Set up new interaction
         canInteract = true;
         brokenLight = newBrokenLight;
@@ -110,11 +121,43 @@ public class PlayerBehavior : MonoBehaviour
             brokenLight.UnHighlightLight();
             brokenLight = null;
         }
+        // Clear wallet if we were looking at any
+        if (currentWallet != null)
+        {
+            currentWallet.UnHighlightWallet();
+        }
         // Set canInteract to true
         // Get RubbishBehaviour component from detected object
         canInteract = true;
         currentRubbish = hitObject.GetComponent<RubbishBehaviour>();
         currentRubbish.HighlightRubbish();
+        // Show interact message
+        GameManager.instance.ShowInteractMsg();
+    }
+
+    void HandleWalletDetection(GameObject hitObject)
+    {
+        if (currentWallet != null)
+        {
+            // If current wallet is not null, unhighlight it
+            currentWallet.UnHighlightWallet();
+        }
+        // Clear broken light if we were looking at any
+        if (brokenLight != null)
+        {
+            brokenLight.UnHighlightLight();
+            brokenLight = null;
+        }
+        // Clear rubbish if we were looking at any
+        if (currentRubbish != null)
+        {
+            currentRubbish.UnHighlightRubbish();
+            currentRubbish = null;
+        }
+        // Set canInteract to true
+        canInteract = true;
+        currentWallet = hitObject.GetComponent<WalletBehaviour>();
+        currentWallet.HighlightWallet();
         // Show interact message
         GameManager.instance.ShowInteractMsg();
     }
@@ -131,6 +174,12 @@ public class PlayerBehavior : MonoBehaviour
         {
             currentRubbish.UnHighlightRubbish();
             currentRubbish = null;
+        }
+
+        if (currentWallet != null)
+        {
+            currentWallet.UnHighlightWallet();
+            currentWallet = null;
         }
 
         canInteract = false;
@@ -155,8 +204,16 @@ public class PlayerBehavior : MonoBehaviour
                 Debug.Log("Interacting with rubbish: " + currentRubbish.gameObject.name);
                 // Call the method to pick up rubbish
                 currentRubbish.PickUpRubbish();
-                
+
             }
+            else if (currentWallet != null)
+            {
+                Debug.Log("Interacting with wallet: " + currentWallet.gameObject.name);
+                // Call the method to pick up wallet
+                currentWallet.PickUpWallet();
+            }
+            // Clear all interactions after interaction
+            ClearAllInteractions();
         }
     }
 }
