@@ -71,14 +71,8 @@ public class GameManager : MonoBehaviour
         {
             // All rubbish collected, load next scene
             Debug.Log("All rubbish collected!");
-            LoadNextScene();
+            StartCoroutine(levelLoader.LoadLevel(targetSceneIndex));
         }
-    }
-
-    private void LoadNextScene()
-    {
-        // Start the level loading coroutine
-        StartCoroutine(levelLoader.LoadLevel(targetSceneIndex));
     }
     
     // Method to show interact message
@@ -96,34 +90,4 @@ public class GameManager : MonoBehaviour
         playerUI.gameObject.SetActive(false);
         Debug.Log("Interact message hidden");
     }
-
-
-    // void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    // {
-    //     Debug.Log("Scene loaded: " + scene.name);
-    //     // Check if the scene is the main menu
-    //     if (scene.name == "MainMenu")
-    //     {
-    //         if (player != null)
-    //         {
-    //             player.EnableInput(false);
-    //         }
-    //         else
-    //         {
-    //             player.EnableInput(true);
-    //         }
-    //     }
-    // }
-
-    // void OnEnable()
-    // {
-    //     // Subscribe to the scene loaded event
-    //     SceneManager.sceneLoaded += OnSceneLoaded;
-    // }
-
-    // void OnDisable()
-    // {
-    //     // Unsubscribe from the scene loaded event
-    //     SceneManager.sceneLoaded -= OnSceneLoaded;
-    // }
 }

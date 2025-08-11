@@ -59,16 +59,61 @@ public class DialogueBehaviour : MonoBehaviour
     /// </summary>
     private Coroutine typingCoroutine;
 
+    /// <summary>
+    /// Tracks if dialogue is currently active
+    /// </summary>
+    private bool isDialogueActive = false;
+
+    /// <summary>
+    /// Unlock cursor and make it visible
+    /// </summary>
+    void UnlockCursor()
+        {
+            levelLoader.UnlockCursor();
+        }
+
 
     void Start()
     {
+        GameManager.instance.HideInteractMsg();
+
         textComponent.text = string.Empty;
         if (nameComponent != null)
-        { 
+        {
             nameComponent.text = string.Empty;
         }
-        StartCoroutine(DelayedStart());
+        SetDialogueActive(true); // Ensure dialogue is not active at start
+        UnlockCursor(); // Unlock cursor when dialogue starts
     }
+
+    /// <summary>
+    /// Activates or deactivates the dialogue canvas and starts/stops dialogue
+    /// </summary>
+    /// <param name="active">Whether to activate the dialogue</param>
+    public void SetDialogueActive(bool active)
+    {
+        if (dialogueCanvas != null)
+        {
+            dialogueCanvas.SetActive(active);
+        }
+        
+        isDialogueActive = active;
+        
+        if (active)
+        {
+            StartCoroutine(DelayedStart());
+        }
+        else
+        {
+            // Stop any ongoing typing when deactivating
+            if (typingCoroutine != null)
+            {
+                StopCoroutine(typingCoroutine);
+                typingCoroutine = null;
+            }
+        }
+    }
+
 
     IEnumerator DelayedStart()
     {

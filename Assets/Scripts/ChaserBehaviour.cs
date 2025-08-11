@@ -15,20 +15,16 @@ public class ChaserBehaviour : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         currentState = State.Following;
-    }
-
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Update()
     {
-        switch (currentState)
+        if (currentState == State.Following)
         {
-            case State.Following:
-                agent.SetDestination(player.position);
-                break;
-
-
-            case State.Leaving:
-                agent.SetDestination(exitPoint.position);
-                break;
+            agent.SetDestination(player.position);
+        }
+        else if (currentState == State.Leaving)
+        {
+            agent.SetDestination(exitPoint.position);
         }
     }
 
@@ -44,5 +40,6 @@ public class ChaserBehaviour : MonoBehaviour
     public void SetState(State newState)
     {
         currentState = newState;
+        
     }
 }
