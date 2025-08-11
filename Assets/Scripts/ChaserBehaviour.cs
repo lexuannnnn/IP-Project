@@ -1,16 +1,21 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class ChaserBehaviour : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    NavMeshAgent myAgent;
+    [SerializeField] Transform targetTransform;
+
+    void Awake()
     {
-        
+        myAgent = GetComponent<NavMeshAgent>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (targetTransform != null)
+        {
+            myAgent.SetDestination(targetTransform.position);
+        }
     }
 }
