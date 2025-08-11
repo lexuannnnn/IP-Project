@@ -732,9 +732,15 @@ MonoBehaviour:
   m_FolderTreeState:
     scrollPos: {x: 0, y: 79}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     m_SelectedIDs: 4c680200
     m_LastClickedID: 157772
     m_ExpandedIDs: 000000002a6602002c6602002e6602003066020032660200346602003666020038660200
+=======
+    m_SelectedIDs: f0b80000
+    m_LastClickedID: 47344
+    m_ExpandedIDs: 0000000018ba00001aba00001cba00001eba000020ba000022ba000024ba0000
+>>>>>>> Stashed changes
 =======
     m_SelectedIDs: f0b80000
     m_LastClickedID: 47344
@@ -1529,6 +1535,7 @@ MonoBehaviour:
     m_Target: {x: -0.119790286, y: 0.83352786, z: -0.1992421, w: -0.5013328}
     speed: 2
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     m_Value: {x: 0.008279429, y: 0.94365513, z: -0.33020848, w: 0.023499789}
 =======
     m_Value: {x: -0.11978128, y: 0.83346516, z: -0.19922711, w: -0.5012951}
@@ -1539,6 +1546,13 @@ MonoBehaviour:
 <<<<<<< Updated upstream
     m_Value: 35.058853
 =======
+    m_Value: 37.672195
+>>>>>>> Stashed changes
+=======
+    m_Value: {x: -0.11978128, y: 0.83346516, z: -0.19922711, w: -0.5012951}
+  m_Size:
+    m_Target: 37.672195
+    speed: 2
     m_Value: 37.672195
 >>>>>>> Stashed changes
   m_Ortho:

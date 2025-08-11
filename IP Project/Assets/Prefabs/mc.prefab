@@ -1,7 +1,11 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 --- !u!1 &4691556889294998067
+=======
+--- !u!1 &5949568308134441944
+>>>>>>> Stashed changes
 =======
 --- !u!1 &5949568308134441944
 >>>>>>> Stashed changes
@@ -13,9 +17,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   - component: {fileID: 4110936697425535355}
   - component: {fileID: 6322896157758742232}
   - component: {fileID: 8390027376789228541}
+=======
+  - component: {fileID: 7660901713345943954}
+>>>>>>> Stashed changes
 =======
   - component: {fileID: 7660901713345943954}
 >>>>>>> Stashed changes
@@ -27,7 +35,11 @@ GameObject:
   m_StaticEditorFlags: 0
   m_IsActive: 1
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 --- !u!4 &4110936697425535355
+=======
+--- !u!4 &7660901713345943954
+>>>>>>> Stashed changes
 =======
 --- !u!4 &7660901713345943954
 >>>>>>> Stashed changes
@@ -36,6 +48,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
   m_GameObject: {fileID: 4691556889294998067}
   serializedVersion: 2
@@ -100,6 +113,8 @@ MeshRenderer:
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
 =======
+=======
+>>>>>>> Stashed changes
   m_GameObject: {fileID: 5949568308134441944}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -172,4 +187,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 914723735fabb5b47ac621de375fc011, type: 3}
   m_PrefabInstance: {fileID: 1232307783932678967}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
