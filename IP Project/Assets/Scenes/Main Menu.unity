@@ -1253,6 +1253,10 @@ PrefabInstance:
       propertyPath: transition
       value: 
       objectReference: {fileID: 108885222}
+    - target: {fileID: 6803645572028892297, guid: f62c2b5e9d4fe114c83afcc2070e81f4, type: 3}
+      propertyPath: cursorLockMode
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3099,6 +3103,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2232850022442061457, guid: eb65304e54e13f249838f7f88e2cb957, type: 3}
+      propertyPath: levelLoader
+      value: 
+      objectReference: {fileID: 1190968993}
     - target: {fileID: 2696292547132731636, guid: eb65304e54e13f249838f7f88e2cb957, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -3158,10 +3166,10 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 346098479447549726}
   - {fileID: 1606535647}
   - {fileID: 1194927352}
   - {fileID: 2044610972}
   - {fileID: 1453218984}
   - {fileID: 1987546549}
   - {fileID: 1452734153}
-  - {fileID: 346098479447549726}

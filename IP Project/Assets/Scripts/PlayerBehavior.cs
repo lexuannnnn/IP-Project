@@ -212,6 +212,9 @@ public class PlayerBehavior : MonoBehaviour
                 // Call the method to pick up wallet
                 currentWallet.PickUpWallet();
             }
+            // Clear all interactions after interaction
+            ClearAllInteractions();
         }
     }
 }
+
