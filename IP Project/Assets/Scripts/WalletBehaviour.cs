@@ -27,6 +27,12 @@ public class WalletBehaviour : MonoBehaviour
     [SerializeField]
     int sceneIndex;
 
+    // <summary>
+    /// Reference to the DialogueBehaviour component.
+    /// </summary>
+    [SerializeField]
+    DialogueBehaviour dialogueSystem;
+
     /// <summary>
     /// Start is called once before the first execution of Update after the MonoBehaviour is created
     /// </summary>
@@ -62,7 +68,17 @@ public class WalletBehaviour : MonoBehaviour
     {
         // Hide interact message
         GameManager.instance.HideInteractMsg();
-        // Load the "ending" scene
-        StartCoroutine(levelLoader.LoadLevel(sceneIndex));
+        // Start dialogue sequence
+        if (dialogueSystem != null)
+        {
+            dialogueSystem.SetDialogueActive(true);
+        }
+        else
+        {
+            // Fallback: if no dialogue system, load scene directly
+            Debug.LogWarning("No DialogueBehaviour found! Loading scene directly.");
+            StartCoroutine(levelLoader.LoadLevel(sceneIndex));
+        }
+
     }
 }

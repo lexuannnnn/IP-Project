@@ -73,7 +73,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 100}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 1
-  controlID: 142
+  controlID: 139
   draggingID: 0
 --- !u!114 &4
 MonoBehaviour:
@@ -99,7 +99,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 100}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 143
+  controlID: 140
   draggingID: 0
 --- !u!114 &5
 MonoBehaviour:
@@ -279,7 +279,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 1
-  controlID: 62
+  controlID: 91
   draggingID: 0
 --- !u!114 &12
 MonoBehaviour:
@@ -306,7 +306,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 50}
   m_MaxSize: {x: 24288, y: 8096}
   vertical: 0
-  controlID: 63
+  controlID: 60
   draggingID: 0
 --- !u!114 &13
 MonoBehaviour:
@@ -713,7 +713,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Materials
+    - Assets/Scenes
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -723,7 +723,7 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 74
   m_LastFolders:
-  - Assets/Materials
+  - Assets/Scenes
   m_LastFoldersGridSize: 74
   m_LastProjectPath: C:\Users\sinen\OneDrive - Ngee Ann Polytechnic\IP 2.1\IP New
     folder clone\IP-Project\IP Project
@@ -731,9 +731,15 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 79}
+<<<<<<< Updated upstream
     m_SelectedIDs: 4c680200
     m_LastClickedID: 157772
     m_ExpandedIDs: 000000002a6602002c6602002e6602003066020032660200346602003666020038660200
+=======
+    m_SelectedIDs: f0b80000
+    m_LastClickedID: 47344
+    m_ExpandedIDs: 0000000018ba00001aba00001cba00001eba000020ba000022ba000024ba0000
+>>>>>>> Stashed changes
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -762,7 +768,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000002a6602002c6602002e6602003066020032660200346602003666020038660200
+    m_ExpandedIDs: 0000000018ba00001aba00001cba00001eba000020ba000022ba000024ba0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -816,7 +822,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 108.600006}
+    m_ScrollPosition: {x: 0, y: 5.600006}
     m_GridSize: 74
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 181
@@ -910,7 +916,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 
+      m_ExpandedIDs: f8f2ffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1472,9 +1478,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: 0.8046466, y: -13.27079, z: -19.476242}
+    m_Target: {x: -50.99171, y: -29.91784, z: -29.065685}
     speed: 2
-    m_Value: {x: 0.8046466, y: -13.27079, z: -19.476242}
+    m_Value: {x: -50.99171, y: -29.91784, z: -29.065685}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1520,13 +1526,21 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.008279429, y: 0.94365513, z: -0.33020848, w: 0.023499789}
+    m_Target: {x: -0.119790286, y: 0.83352786, z: -0.1992421, w: -0.5013328}
     speed: 2
+<<<<<<< Updated upstream
     m_Value: {x: 0.008279429, y: 0.94365513, z: -0.33020848, w: 0.023499789}
+=======
+    m_Value: {x: -0.11978128, y: 0.83346516, z: -0.19922711, w: -0.5012951}
+>>>>>>> Stashed changes
   m_Size:
-    m_Target: 35.058853
+    m_Target: 37.672195
     speed: 2
+<<<<<<< Updated upstream
     m_Value: 35.058853
+=======
+    m_Value: 37.672195
+>>>>>>> Stashed changes
   m_Ortho:
     m_Target: 0
     speed: 2
