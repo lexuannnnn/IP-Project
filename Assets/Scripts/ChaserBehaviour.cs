@@ -3,19 +3,46 @@ using UnityEngine.AI;
 
 public class ChaserBehaviour : MonoBehaviour
 {
-    NavMeshAgent myAgent;
-    [SerializeField]
-    Transform targetTransform;
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake()
+    public enum State { Following, Leaving }
+    public State currentState;
+
+    public Transform player;
+    public Transform exitPoint;
+
+    private NavMeshAgent agent;
+
+    void Start()
     {
-        myAgent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
+        currentState = State.Following;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        myAgent.SetDestination(targetTransform.position);
+        switch (currentState)
+        {
+            case State.Following:
+                agent.SetDestination(player.position);
+                break;
+
+
+            case State.Leaving:
+                agent.SetDestination(exitPoint.position);
+                break;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("PoliceStation"))
+        {
+            player = exitPoint;
+            SetState(State.Leaving);
+        }
+    }
+    
+    public void SetState(State newState)
+    {
+        currentState = newState;
     }
 }
