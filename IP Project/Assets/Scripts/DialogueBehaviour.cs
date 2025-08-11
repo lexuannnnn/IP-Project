@@ -64,15 +64,26 @@ public class DialogueBehaviour : MonoBehaviour
     /// </summary>
     private bool isDialogueActive = false;
 
+    /// <summary>
+    /// Unlock cursor and make it visible
+    /// </summary>
+    void UnlockCursor()
+        {
+            levelLoader.UnlockCursor();
+        }
+
 
     void Start()
     {
+        GameManager.instance.HideInteractMsg();
+
         textComponent.text = string.Empty;
         if (nameComponent != null)
         {
             nameComponent.text = string.Empty;
         }
-        SetDialogueActive(false); // Ensure dialogue is not active at start
+        SetDialogueActive(true); // Ensure dialogue is not active at start
+        UnlockCursor(); // Unlock cursor when dialogue starts
     }
 
     /// <summary>
@@ -81,30 +92,15 @@ public class DialogueBehaviour : MonoBehaviour
     /// <param name="active">Whether to activate the dialogue</param>
     public void SetDialogueActive(bool active)
     {
-        Debug.Log($"SetDialogueActive called with: {active}");
         if (dialogueCanvas != null)
         {
             dialogueCanvas.SetActive(active);
         }
-
+        
         isDialogueActive = active;
-
+        
         if (active)
         {
-            // Unlock cursor when dialogue starts
-            if (levelLoader != null)
-            {
-                Debug.Log("Unlocking cursor for dialogue");
-                levelLoader.UnlockCursor();
-            }
-            else
-            {
-                Debug.LogError("LevelLoader is null! Cannot unlock cursor");
-                // Fallback cursor unlock
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-            }
-
             StartCoroutine(DelayedStart());
         }
         else
@@ -115,25 +111,12 @@ public class DialogueBehaviour : MonoBehaviour
                 StopCoroutine(typingCoroutine);
                 typingCoroutine = null;
             }
-
-            // Lock cursor when dialogue ends
-            if (levelLoader != null)
-            {
-                levelLoader.LockCursor();
-            }
-            else
-            {
-                // Fallback cursor lock
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-            }
         }
     }
 
 
     IEnumerator DelayedStart()
     {
-        Debug.Log("DelayedStart coroutine started");
         dialogueCanvas.SetActive(false); // Hide dialogue canvas initially
         yield return new WaitForSeconds(1f); // Wait for 1 second before starting dialogue
         StartDialogue();
@@ -158,7 +141,6 @@ public class DialogueBehaviour : MonoBehaviour
     }
     void StartDialogue()
     {
-        Debug.Log("StartDialogue called");
         dialogueCanvas.SetActive(true); // Show dialogue canvas
         index = 0;
         UpdateNameDisplay();
@@ -203,14 +185,6 @@ public class DialogueBehaviour : MonoBehaviour
             {
                 gameObject.SetActive(false); // Hide dialogue when done
             }
-        }
-    }
-    // Method to handle mouse clicks during dialogue
-    void Update()
-    {
-        if (isDialogueActive && Input.GetMouseButtonDown(0))
-        {
-            PlayNextSentence();
         }
     }
 }
