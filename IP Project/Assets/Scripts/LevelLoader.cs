@@ -35,7 +35,7 @@ public class LevelLoader : MonoBehaviour
         yield return new WaitForSeconds(transitionTime);
 
         //Load Scene
-        SceneManager.LoadScene(levelIndex);
+        SceneManager.LoadSceneAsync(levelIndex);
     }
     
     /// <summary>

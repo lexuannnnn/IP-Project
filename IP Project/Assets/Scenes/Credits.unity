@@ -656,6 +656,10 @@ PrefabInstance:
       value: LevelLoader
       objectReference: {fileID: 0}
     - target: {fileID: 6803645572028892297, guid: f62c2b5e9d4fe114c83afcc2070e81f4, type: 3}
+      propertyPath: transition
+      value: 
+      objectReference: {fileID: 1166064090}
+    - target: {fileID: 6803645572028892297, guid: f62c2b5e9d4fe114c83afcc2070e81f4, type: 3}
       propertyPath: cursorLockMode
       value: 0
       objectReference: {fileID: 0}
@@ -664,6 +668,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f62c2b5e9d4fe114c83afcc2070e81f4, type: 3}
+--- !u!95 &1166064090 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1472954518247353753, guid: f62c2b5e9d4fe114c83afcc2070e81f4, type: 3}
+  m_PrefabInstance: {fileID: 1122287265}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1190136064
 GameObject:
   m_ObjectHideFlags: 0
