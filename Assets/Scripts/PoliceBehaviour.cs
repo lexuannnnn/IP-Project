@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
-public class ChaserBehaviour : MonoBehaviour
+public class PoliceBehaviour : MonoBehaviour
 {
     NavMeshAgent myAgent;
     [SerializeField]
