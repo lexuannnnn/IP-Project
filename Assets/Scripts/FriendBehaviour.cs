@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class FriendFSM : MonoBehaviour
+public class FriendBehaviour: MonoBehaviour
 {
     public enum State { Following, Leaving }
     public State currentState;
