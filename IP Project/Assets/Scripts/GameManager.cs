@@ -86,8 +86,12 @@ public class GameManager : MonoBehaviour
     // Method to hide interact message
     public void HideInteractMsg()
     {
-        // Hide the interact menu UI
-        playerUI.gameObject.SetActive(false);
-        Debug.Log("Interact message hidden");
+        if (playerUI.gameObject.activeSelf == true)
+        {
+            // Hide the interact menu UI
+            playerUI.gameObject.SetActive(false);
+            Debug.Log("Interact message hidden");
+        }
+        
     }
 }
