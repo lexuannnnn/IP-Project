@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ChaserBehaviour : MonoBehaviour
+public class FriendFSM : MonoBehaviour
 {
     public enum State { Following, Leaving }
     public State currentState;
@@ -15,7 +15,14 @@ public class ChaserBehaviour : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         currentState = State.Following;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    }
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("HalfwayPoint"))
+        {
+            currentState = State.Leaving;
+        }
+    }
     void Update()
     {
         if (currentState == State.Following)
@@ -27,19 +34,9 @@ public class ChaserBehaviour : MonoBehaviour
             agent.SetDestination(exitPoint.position);
         }
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("PoliceStation"))
-        {
-            player = exitPoint;
-            SetState(State.Leaving);
-        }
-    }
     
     public void SetState(State newState)
     {
         currentState = newState;
-        
     }
 }
