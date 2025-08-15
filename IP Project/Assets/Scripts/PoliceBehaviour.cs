@@ -3,51 +3,60 @@ using UnityEngine.AI;
 using System.Collections;
 public class PoliceBehaviour : MonoBehaviour
 {
+    public enum State { Idle, FollowPlayer }
+    public State currentState;
     NavMeshAgent myAgent;
     [SerializeField]
     Transform targetTransform;
-    private string currentState;
+    Coroutine stateCoroutine;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     void Start()
     {
-        currentState = "Idle";
-        StartCoroutine(Idle());
-    }
-    void Awake()
-    {
         myAgent = GetComponent<NavMeshAgent>();
+        SwitchState(State.Idle);
     }
     IEnumerator Idle()
     {
-        while (currentState == "Idle")
+        while (currentState == State.Idle)
         {
-            yield return null;
+            // If target appears, switch state once
             if (targetTransform != null)
             {
-                StartCoroutine(SwitchState("FollowPlayer"));
+                SwitchState(State.FollowPlayer);
+                yield break; // exit this coroutine
             }
+            yield return null;
         }
     }
 
-    IEnumerator SwitchState(string newState)
+    void SwitchState(State newState)
     {
-        if (currentState == newState)
-        {
-            yield break;
-        }
+        if (stateCoroutine != null)
+            StopCoroutine(stateCoroutine);
+
         currentState = newState;
-        StartCoroutine(currentState);
+
+        if (newState == State.Idle)
+            stateCoroutine = StartCoroutine(Idle());
+        else if (newState == State.FollowPlayer)
+            stateCoroutine = StartCoroutine(FollowPlayer());
     }
 
     IEnumerator FollowPlayer()
     {
-        while (currentState == "FollowPlayer")
+        while (currentState == State.FollowPlayer)
         {
             if (targetTransform != null)
             {
                 myAgent.SetDestination(targetTransform.position);
+            }
+            else
+            {
+                // Lost target, go back to Idle
+                SwitchState(State.Idle);
+                yield break;
             }
             yield return null;
         }

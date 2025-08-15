@@ -4,15 +4,21 @@ using System.Collections;
 
 public class CitizenPatrol : MonoBehaviour
 {
+    public enum State { Patrol, Idle }
+    public State currentState;
     [SerializeField] Transform[] walkPoints;
     [SerializeField] float pauseTime = 2f; // fixed pause duration in seconds
 
-    NavMeshAgent agent;
-    int currentIndex = 0;
+    private NavMeshAgent agent;
+    private int currentIndex = 0;
+    private Coroutine patrolCoroutine;
 
-    void Awake() => agent = GetComponent<NavMeshAgent>();
-
-    void Start() => StartCoroutine(Patrol());
+    void Start()
+    {
+        agent = GetComponent<NavMeshAgent>();
+        currentState = State.Patrol;
+        patrolCoroutine = StartCoroutine(Patrol());
+    }
 
     IEnumerator Patrol()
     {
@@ -20,14 +26,24 @@ public class CitizenPatrol : MonoBehaviour
 
         while (true)
         {
-            agent.SetDestination(walkPoints[currentIndex].position);
+            if (currentState == State.Patrol)
+                agent.SetDestination(walkPoints[currentIndex].position);
 
             while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
                 yield return null;
 
-            yield return new WaitForSeconds(pauseTime);
+            currentState = State.Idle;
 
-            currentIndex = (currentIndex + 1) % walkPoints.Length;
+            if (currentState == State.Idle)
+            {
+                yield return new WaitForSeconds(pauseTime);
+
+                currentIndex++;
+                if (currentIndex >= walkPoints.Length)
+                    currentIndex = 0;
+                currentState = State.Patrol;
+            }
+            yield return null;
         }
     }
 }
