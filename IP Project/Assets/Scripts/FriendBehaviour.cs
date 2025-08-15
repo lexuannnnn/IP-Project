@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
@@ -9,7 +10,6 @@ public class FriendBehaviour: MonoBehaviour
     public Transform player;
     public Transform exitPoint;
     public GameObject dialoguebox;
-
     private NavMeshAgent agent;
     private Coroutine dialogueCoroutine;
 
@@ -41,7 +41,7 @@ public class FriendBehaviour: MonoBehaviour
             Destroy(gameObject);
         }
     }
-        private IEnumerator ShowDialogueForSeconds(float duration)
+    private IEnumerator ShowDialogueForSeconds(float duration)
     {
         if (dialoguebox != null)
         {
