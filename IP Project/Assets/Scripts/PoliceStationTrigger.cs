@@ -4,13 +4,14 @@ public class PoliceStationTrigger : MonoBehaviour
 {
     [SerializeField]
     private bool debugMode = true;
+    private bool hasTriggered = false; // Prevent multiple triggers
 
     private void Start()
     {
         if (debugMode)
         {
             Debug.Log($"PoliceStationTrigger initialized in scene: {UnityEngine.SceneManagement.SceneManager.GetActiveScene().name}");
-            Debug.Log($"Current hasVisitedPoliceStation: {GameManager.instance.hasVisitedPoliceStation}");
+            Debug.Log($"Current hasVisitedPoliceStation: {GameManager.hasVisitedPoliceStation}");
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -22,15 +23,25 @@ public class PoliceStationTrigger : MonoBehaviour
             Debug.Log($"Trigger position: {transform.position}");
         }
 
-        if (other.CompareTag("Player"))
+        // Only trigger once and only for Player tag
+        if (other.CompareTag("Player") && !hasTriggered && !GameManager.hasVisitedPoliceStation)
         {
+            hasTriggered = true; // Prevent multiple triggers
+            
             if (debugMode)
             {
                 Debug.Log("Setting hasVisitedPoliceStation to TRUE!");
             }
 
-            GameManager.instance.SetPoliceStationVisited();
+            GameManager.SetPoliceStationVisited();
             Debug.Log("Player has visited the police station!");
+        }
+        else if (other.CompareTag("Player") && GameManager.hasVisitedPoliceStation)
+        {
+            if (debugMode)
+            {
+                Debug.Log("Player already visited police station - not triggering again");
+            }
         }
     }
 

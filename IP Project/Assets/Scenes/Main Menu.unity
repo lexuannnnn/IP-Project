@@ -2090,7 +2090,7 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 5
-  m_Depth: 0
+  m_Depth: 10
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -3025,10 +3025,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1915858823336814676, guid: eb65304e54e13f249838f7f88e2cb957, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2821228732425185720, guid: eb65304e54e13f249838f7f88e2cb957, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3067,6 +3063,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2821228732425185720, guid: eb65304e54e13f249838f7f88e2cb957, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3052434160981569903, guid: eb65304e54e13f249838f7f88e2cb957, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4319494912819538838, guid: eb65304e54e13f249838f7f88e2cb957, type: 3}

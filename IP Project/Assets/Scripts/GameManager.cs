@@ -15,11 +15,13 @@ public class GameManager : MonoBehaviour
     /// Player behavior script.
     /// </summary>
     PlayerBehavior player;
+    [SerializeField]
+    public GameObject playerPrefab;
+
     /// <summary>
     /// Canvas UI for the player.
     /// </summary>
     public Canvas playerUI;
-
     [SerializeField]
     public Canvas rubbishUI;
     /// <summary>
@@ -33,25 +35,21 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI rubbishCountText;
     TextMeshProUGUI interactText;
-
     /// <summary>
     /// Name of the GameObject containing DialogueBehaviour (will be found dynamically)
     /// </summary>
     [SerializeField]
     private string posterDialogueObjectName = "PosterDialogue";
-
     /// <summary>
     /// Array of dialogue sentences 
     /// </summary>
     [SerializeField]
     string[] posterSentences;
-
     /// <summary>
     /// Array of character names 
     /// </summary>
     [SerializeField]
     string[] posterNames;
-
     bool enablePosterDialogue = true;
     /// <summary>
     /// Reference to the LevelLoader component.
@@ -62,13 +60,11 @@ public class GameManager : MonoBehaviour
     /// </summary>
     [SerializeField]
     private bool loadSceneAfterCompletion = false;
-
     /// <summary>
     /// Scene index to load after completion
     /// </summary>
     [SerializeField]
     private int targetSceneIndex = 1;
-
     /// <summary>
     /// The name of the spawn point GameObject to find in each scene
     /// </summary>
@@ -79,19 +75,45 @@ public class GameManager : MonoBehaviour
     /// </summary>
     [SerializeField]
     private string spawnPointTag = "PlayerSpawn";
-
     // NEW: Store spawn position and rotation to use after scene loads
     private Vector3 pendingSpawnPosition;
     private Quaternion pendingSpawnRotation;
     private bool shouldUseSpawnPoint = false;
-
-    public bool hasVisitedPoliceStation = false;
+    public static bool hasVisitedPoliceStation = false;
     public bool isInDialogue = false;
     public int rubbishCollected = 0;
     private bool hasTriggeredPosterDialogue = false;
-    public void SetPoliceStationVisited()
+    public static void SetPoliceStationVisited()
     {
-        hasVisitedPoliceStation = true;
+        if (GameObject.FindGameObjectWithTag("Player") != null)
+        {
+            hasVisitedPoliceStation = true;
+            Debug.Log("GameManager: hasVisitedPoliceStation set to TRUE");
+
+            // Also save to PlayerPrefs for consistency with other scripts
+            PlayerPrefs.SetInt("VisitedPoliceStation", 1);
+        }
+        PlayerPrefs.Save();
+        // Notify other objects in the scene
+        NotifyPoliceStationVisited();
+    }
+    /// <summary>
+    /// Notify all relevant objects that police station was visited
+    /// </summary>
+    private static void NotifyPoliceStationVisited()
+    {
+        // Find and notify PoliceBehaviour objects
+        PoliceBehaviour[] policeObjects = FindObjectsByType<PoliceBehaviour>(FindObjectsSortMode.None);
+        foreach (var police in policeObjects)
+        {
+            police.OnPoliceStationVisited();
+        }
+        // Find and notify FriendBehaviour objects (support multiple objects)
+        FriendBehaviour[] friendObjects = FindObjectsByType<FriendBehaviour>(FindObjectsSortMode.None);
+        foreach (var friend in friendObjects)
+        {
+            friend.OnPoliceStationVisited();
+        }
     }
 
     private void Awake()
@@ -104,14 +126,26 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
-            // Reset static variables when game starts
+            // Reset variables when game starts
             hasVisitedPoliceStation = false;
+            PlayerPrefs.DeleteKey("VisitedPoliceStation"); // Clear PlayerPrefs too
+            PlayerPrefs.Save();
             Debug.Log("GameManager initialized - hasVisitedPoliceStation reset to false");
         }
     }
 
     private void Start()
     {
+        // Initialize player reference
+        if (player == null)
+        {
+            player = FindFirstObjectByType<PlayerBehavior>();
+            if (player == null)
+            {
+                Debug.LogWarning("PlayerBehavior not found! Player spawn positioning may not work.");
+            }
+        }
+
         if (levelLoader == null)
         {
             levelLoader = GetComponent<LevelLoader>();
@@ -120,6 +154,9 @@ public class GameManager : MonoBehaviour
                 Debug.LogError("No LevelLoader found in the scene!");
             }
         }
+
+        // Apply spawn point if we have one pending
+        ApplySpawnPointIfNeeded();
     }
 
     /// <summary>
@@ -196,89 +233,97 @@ public class GameManager : MonoBehaviour
     }
     
     /// <summary>
-    /// Load level and use spawn point (for entering police station)
+    /// Load level and use spawn point
     /// </summary>
     public void LoadLevelWithSpawnPoint(int sceneIndex)
     {
         Debug.Log($"LoadLevelWithSpawnPoint called for scene {sceneIndex}");
         
-        // Find spawn point in current scene before loading new one
-        Transform currentSpawnPoint = FindPlayerSpawnPoint();
-        
-        if (currentSpawnPoint != null)
-        {
-            pendingSpawnPosition = currentSpawnPoint.position;
-            pendingSpawnRotation = currentSpawnPoint.rotation;
-            shouldUseSpawnPoint = true;
-            Debug.Log($"Stored spawn point: {pendingSpawnPosition} for scene {sceneIndex}");
-        }
-        else
-        {
-            Debug.LogWarning($"No spawn point found in current scene {SceneManager.GetActiveScene().name}!");
-            shouldUseSpawnPoint = false;
-        }
+        // Find spawn point in destination scene (not current scene)
+        // We'll find it after the scene loads
+        shouldUseSpawnPoint = true;
+        Debug.Log($"Will apply spawn point after loading scene {sceneIndex}");
         
         StartCoroutine(levelLoader.LoadLevel(sceneIndex));
     }
 
-    // /// <summary>
-    // /// Apply pending spawn point after scene loads
-    // /// </summary>
-    // private void ApplySpawnPointIfNeeded()
-    // {
-    //     if (!shouldUseSpawnPoint) return;
 
-    //     // Find player if we don't have reference
-    //     if (player == null)
-    //     {
-    //         player = FindAnyObjectByType<PlayerBehavior>();
-    //     }
+    /// <summary>
+    /// Apply pending spawn point after scene loads
+    /// </summary>
+    private void ApplySpawnPointIfNeeded()
+    {
+        Debug.Log($"ApplySpawnPointIfNeeded called. shouldUseSpawnPoint: {shouldUseSpawnPoint}");
+        
+        if (!shouldUseSpawnPoint) return;
 
-    //     if (player != null)
-    //     {
-    //         // Disable any movement components temporarily
-    //         var characterController = player.GetComponent<CharacterController>();
-    //         var rigidbody = player.GetComponent<Rigidbody>();
-    //         var navMeshAgent = player.GetComponent<NavMeshAgent>();
+        // Find spawn point in the newly loaded scene
+        Transform spawnPoint = FindPlayerSpawnPoint();
+        if (spawnPoint != null)
+        {
+            pendingSpawnPosition = spawnPoint.position;
+            pendingSpawnRotation = spawnPoint.rotation;
+        }
+        else
+        {
+            Debug.LogWarning("No spawn point found in new scene!");
+            shouldUseSpawnPoint = false;
+            return;
+        }
 
-    //         // Disable NavMesh agent if present
-    //         if (navMeshAgent != null)
-    //         {
-    //             navMeshAgent.enabled = false;
-    //         }
+        // Find player if we don't have reference
+        if (player == null)
+        {
+            player = FindFirstObjectByType<PlayerBehavior>();
+            Debug.Log($"Player found: {player != null}");
+        }
 
-    //         // Set position and rotation
-    //         player.transform.position = pendingSpawnPosition;
-    //         player.transform.rotation = pendingSpawnRotation;
+        if (player != null)
+        {
+            Debug.Log($"Applying spawn point: {pendingSpawnPosition}");
+            
+            // Disable any movement components temporarily
+            var characterController = player.GetComponent<CharacterController>();
+            var rigidbody = player.GetComponent<Rigidbody>();
+            var navMeshAgent = player.GetComponent<NavMeshAgent>();
 
-    //         // Re-enable NavMesh agent if it was present
-    //         if (navMeshAgent != null)
-    //         {
-    //             // Wait a frame before re-enabling to ensure position is set
-    //             StartCoroutine(ReEnableNavMeshAgent(navMeshAgent));
-    //         }
+            // Disable NavMesh agent if present
+            if (navMeshAgent != null)
+            {
+                navMeshAgent.enabled = false;
+            }
 
-    //         Debug.Log($"Player spawned at: {pendingSpawnPosition}");
-    //         shouldUseSpawnPoint = false; // Reset flag
-    //     }
-    //     else
-    //     {
-    //         Debug.LogError("Could not find PlayerBehavior to apply spawn point!");
-    //     }
-    // }
-    // /// <summary>
-    // /// Re-enable NavMesh agent after a frame delay
-    // /// </summary>
-    // private IEnumerator ReEnableNavMeshAgent(NavMeshAgent agent)
-    // {
-    //     yield return null; // Wait one frame
-    //     if (agent != null)
-    //     {
-    //         agent.enabled = true;
-    //     }
-    // }
+            // Set position and rotation
+            player.transform.position = pendingSpawnPosition;
+            player.transform.rotation = pendingSpawnRotation;
 
+            // Re-enable NavMesh agent if it was present
+            if (navMeshAgent != null)
+            {
+                // Wait a frame before re-enabling to ensure position is set
+                StartCoroutine(ReEnableNavMeshAgent(navMeshAgent));
+            }
 
+            Debug.Log($"Player spawned at: {player.transform.position}");
+            shouldUseSpawnPoint = false; // Reset flag
+        }
+        else
+        {
+            Debug.LogError("Could not find PlayerBehavior to apply spawn point!");
+        }
+    }
+
+    /// <summary>
+    /// Re-enable NavMesh agent after a frame delay
+    /// </summary>
+    private IEnumerator ReEnableNavMeshAgent(NavMeshAgent agent)
+    {
+        yield return null; // Wait one frame
+        if (agent != null)
+        {
+            agent.enabled = true;
+        }
+    }
     public void RubbishCollected()
     {
         rubbishCollected++;
@@ -291,7 +336,6 @@ public class GameManager : MonoBehaviour
             TriggerPosterDialogue();
         }
     }
-
    /// <summary>
     /// Trigger the Poster dialogue
     /// </summary>
@@ -350,6 +394,25 @@ public class GameManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         ShowRubbishUIOnSceneLoad(scene.buildIndex);
+        // Enable player functionality only in game scenes (1 and 2)
+        if (scene.buildIndex == 1 || scene.buildIndex == 2)
+        {
+            EnablePlayerInGame();
+        }
+        else
+        {
+            DisablePlayerInMenu();
+        }
+    }
+
+    private void DisablePlayerInMenu()
+    {
+        playerPrefab.SetActive(false);
+    }
+
+    private void EnablePlayerInGame()
+    {
+        playerPrefab.SetActive(true);
     }
     public void ShowRubbishUI()
     {

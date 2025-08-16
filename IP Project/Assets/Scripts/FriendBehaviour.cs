@@ -1,44 +1,47 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using System.Collections;
+
 public class FriendBehaviour: MonoBehaviour
 {
     public enum State { Following, Leaving, LeftDueToPolice }
     public State currentState;
-
-    public Transform player;
+    Transform player;
     public Transform exitPoint;
     public GameObject dialoguebox;
-    [SerializeField]
-    private GameObject policeDialogueBox; // Optional: Different dialogue when leaving due to police
-    
     private NavMeshAgent agent;
     private Coroutine dialogueCoroutine;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        
+        if (player == null)
+        {
+            GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+            if (playerObject != null)
+            {
+                player = playerObject.transform;
+            }
+            if (player == null)
+            {
+                Debug.LogWarning("FriendBehaviour: Could not find player!");
+            }
+        }
         // Check if player has already visited police station
-        if (PlayerPrefs.GetInt("VisitedPoliceStation", 0) == 1)
-        {
-            // Player already visited police station, friend should leave immediately
-            currentState = State.LeftDueToPolice;
-            StartLeavingDueToPolice();
-        }
-        else
-        {
-            currentState = State.Following;
-        }
+            if (PlayerPrefs.GetInt("VisitedPoliceStation", 0) == 1)
+            {
+                // Player already visited police station, friend should leave immediately
+                currentState = State.LeftDueToPolice;
+                StartLeavingDueToPolice();
+            }
+            else
+            {
+                currentState = State.Following;
+            }
         
         if (dialoguebox != null)
         {
             dialoguebox.SetActive(false);
-        }
-        if (policeDialogueBox != null)
-        {
-            policeDialogueBox.SetActive(false);
         }
     }
 
@@ -69,18 +72,6 @@ public class FriendBehaviour: MonoBehaviour
             dialoguebox.SetActive(true);
             yield return new WaitForSeconds(duration);
             dialoguebox.SetActive(false);
-        }
-    }
-
-    private IEnumerator ShowPoliceDialogueForSeconds(float duration)
-    {
-        GameObject dialogueToShow = policeDialogueBox != null ? policeDialogueBox : dialoguebox;
-        
-        if (dialogueToShow != null)
-        {
-            dialogueToShow.SetActive(true);
-            yield return new WaitForSeconds(duration);
-            dialogueToShow.SetActive(false);
         }
     }
 
@@ -134,8 +125,6 @@ public class FriendBehaviour: MonoBehaviour
             StopCoroutine(dialogueCoroutine);
         }
         
-        // Show police-related dialogue if available
-        dialogueCoroutine = StartCoroutine(ShowPoliceDialogueForSeconds(3f));
         Destroy(gameObject, 3f); // Destroy after 3 seconds to simulate leaving
         
         Debug.Log("Friend is leaving due to police station visit");

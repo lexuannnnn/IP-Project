@@ -17,6 +17,15 @@ public class MenuBehaviour : MonoBehaviour
     int targetSceneIndex = 1;
 
     /// <summary>
+    /// unlock cursor
+    /// </summary>
+    public void UnlockCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    /// <summary>
     /// Press Play button to start the game.
     /// </summary>
     public void Play()

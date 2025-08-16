@@ -9,11 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8241012626573769412}
-  - component: {fileID: 2047526645755183825}
   - component: {fileID: 4414776031741784474}
   m_Layer: 0
   m_Name: PlayerSpawnPoint
-  m_TagString: Untagged
+  m_TagString: PlayerSpawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33,21 +32,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2047526645755183825
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1330612067861778425}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4090aba4aa30b9048849a9ca12af4645, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  policeStationSceneIndex: 3
-  outsideSceneIndex: 2
-  isEntranceTrigger: 1
 --- !u!65 &4414776031741784474
 BoxCollider:
   m_ObjectHideFlags: 0

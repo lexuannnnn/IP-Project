@@ -52,8 +52,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: PoliceStationTrigger Variant
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7137248634312970682, guid: 4f778a8708235644d848abae76b494c9, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8877271224678321064, guid: 4f778a8708235644d848abae76b494c9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3404337371256728254}
   m_SourcePrefab: {fileID: 100100000, guid: 4f778a8708235644d848abae76b494c9, type: 3}
+--- !u!1 &5403813426310398557 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8877271224678321064, guid: 4f778a8708235644d848abae76b494c9, type: 3}
+  m_PrefabInstance: {fileID: 3588335959521380853}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3404337371256728254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5403813426310398557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4090aba4aa30b9048849a9ca12af4645, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugMode: 1
