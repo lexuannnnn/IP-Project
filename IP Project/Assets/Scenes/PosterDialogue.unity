@@ -297,7 +297,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelLoader: {fileID: 1343143479}
-  targetSceneIndex: 7
+  targetSceneIndex: 8
   dialogueCanvas: {fileID: 1365291812}
   textComponent: {fileID: 237455408}
   nameComponent: {fileID: 913695872}

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 350853137554493513}
   - component: {fileID: 8532219929518684434}
   - component: {fileID: 831428152696048735}
-  - component: {fileID: 4839466037682646374}
+  - component: {fileID: 7137248634312970682}
   m_Layer: 0
   m_Name: LevelChanger
   m_TagString: Untagged
@@ -137,7 +137,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4839466037682646374
+--- !u!114 &7137248634312970682
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
