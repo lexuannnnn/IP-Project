@@ -4,27 +4,47 @@ using UnityEngine.AI;
 
 public class FriendBehaviour: MonoBehaviour
 {
-    public enum State { Following, Leaving }
+    public enum State { Following, Leaving, LeftDueToPolice }
     public State currentState;
 
     public Transform player;
     public Transform exitPoint;
     public GameObject dialoguebox;
+    [SerializeField]
+    private GameObject policeDialogueBox; // Optional: Different dialogue when leaving due to police
+    
     private NavMeshAgent agent;
     private Coroutine dialogueCoroutine;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        currentState = State.Following;
+        
+        // Check if player has already visited police station
+        if (PlayerPrefs.GetInt("VisitedPoliceStation", 0) == 1)
+        {
+            // Player already visited police station, friend should leave immediately
+            currentState = State.LeftDueToPolice;
+            StartLeavingDueToPolice();
+        }
+        else
+        {
+            currentState = State.Following;
+        }
+        
         if (dialoguebox != null)
         {
             dialoguebox.SetActive(false);
         }
+        if (policeDialogueBox != null)
+        {
+            policeDialogueBox.SetActive(false);
+        }
     }
+
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("HalfwayPoint"))
+        if (other.CompareTag("HalfwayPoint") && currentState == State.Following)
         {
             if (dialoguebox != null)
             {
@@ -41,6 +61,7 @@ public class FriendBehaviour: MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     private IEnumerator ShowDialogueForSeconds(float duration)
     {
         if (dialoguebox != null)
@@ -50,23 +71,76 @@ public class FriendBehaviour: MonoBehaviour
             dialoguebox.SetActive(false);
         }
     }
+
+    private IEnumerator ShowPoliceDialogueForSeconds(float duration)
+    {
+        GameObject dialogueToShow = policeDialogueBox != null ? policeDialogueBox : dialoguebox;
+        
+        if (dialogueToShow != null)
+        {
+            dialogueToShow.SetActive(true);
+            yield return new WaitForSeconds(duration);
+            dialogueToShow.SetActive(false);
+        }
+    }
+
     void Update()
+    {
+        switch (currentState)
+        {
+            case State.Following:
+                if (player != null)
+                {
+                    agent.SetDestination(player.position);
+                }
+                break;
+                
+            case State.Leaving:
+            case State.LeftDueToPolice:
+                if (exitPoint != null)
+                {
+                    agent.SetDestination(exitPoint.position);
+                    
+                    if (Vector3.Distance(transform.position, exitPoint.position) < 3f)
+                    {
+                        Destroy(gameObject);
+                    }
+                }
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Called when player visits police station - friend will leave
+    /// </summary>
+    public void OnPoliceStationVisited()
     {
         if (currentState == State.Following)
         {
-            agent.SetDestination(player.position);
-        }
-        else if (currentState == State.Leaving)
-        {
-            agent.SetDestination(exitPoint.position);
-
-            if (Vector3.Distance(transform.position, exitPoint.position) < 3f)
-            {
-                Destroy(gameObject);
-            }
+            StartLeavingDueToPolice();
         }
     }
-    
+
+    /// <summary>
+    /// Start the leaving process due to police station visit
+    /// </summary>
+    private void StartLeavingDueToPolice()
+    {
+        currentState = State.LeftDueToPolice;
+        
+        // Stop any existing dialogue
+        if (dialogueCoroutine != null)
+        {
+            StopCoroutine(dialogueCoroutine);
+        }
+        
+        // Show police-related dialogue if available
+        dialogueCoroutine = StartCoroutine(ShowPoliceDialogueForSeconds(3f));
+        Destroy(gameObject, 3f); // Destroy after 3 seconds to simulate leaving
+        
+        Debug.Log("Friend is leaving due to police station visit");
+    }
+
     public void SetState(State newState)
     {
         currentState = newState;

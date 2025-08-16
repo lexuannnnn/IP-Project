@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6959221973096095341}
-  - component: {fileID: 7577239673155844216}
   m_Layer: 0
   m_Name: EndingDialogueManager
   m_TagString: Untagged
@@ -32,51 +31,3 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7577239673155844216
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4165941952385936169}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4cb4989dd82c5241aefe252aa66fdfd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  levelLoader: {fileID: 0}
-  targetSceneIndex: 8
-  dialogueCanvas: {fileID: 0}
-  textComponent: {fileID: 0}
-  nameComponent: {fileID: 0}
-  sentences:
-  - Awesome! You found your wallet! My job here is done. I'm glad I could be of some
-    help.
-  - Thanks for helping me out.
-  - To be honest...
-  - I didn't think you would go out of your way to help me find my wallet.
-  - My friends had this bad encounter with the police and distrust them.
-  - But I'm glad I didn't let them influence me.
-  - I realised how kind-hearted and how you geniunely care about about this negihbourhood
-    and the safety of people.
-  - Aw shucks! You're being too kind!
-  - This is just what I do and my responsiblity as a police officer.
-  - I hope your friends can come to trust and accept the police as well. We are suppose
-    to be the protectors afterall.
-  - Oh yeah! There is a coffee with a cop session this weekend. Bring your friends
-    along and we could talk it out.
-  - I will.
-  names:
-  - Police Officer
-  - Benny
-  - Benny
-  - Benny
-  - Benny
-  - Benny
-  - Benny
-  - Police Officer
-  - Police Officer
-  - Police Officer
-  - Police Officer
-  - Benny
-  textSpeed: 0.1

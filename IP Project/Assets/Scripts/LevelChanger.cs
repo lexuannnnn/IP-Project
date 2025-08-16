@@ -15,12 +15,6 @@ public class LevelChanger : MonoBehaviour
     int targetSceneIndex = 1;
 
     /// <summary>
-    /// Reference to the LevelLoader component.
-    /// </summary>
-    [SerializeField]
-    LevelLoader levelLoader;
-
-    /// <summary>
     /// Unity callback called when another collider enters the trigger collider attached to this object.
     /// Loads the target scene if the player enters the trigger.
     /// </summary>
@@ -30,7 +24,7 @@ public class LevelChanger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // Play the level transition animation
-            StartCoroutine(levelLoader.LoadLevel(targetSceneIndex));
+            GameManager.instance.LoadLevelWithSpawnPoint(targetSceneIndex);
         }
     }
 }

@@ -2,16 +2,6 @@ using UnityEngine;
 
 public class WalletBehaviour : MonoBehaviour
 {
-    /// <summary>
-    /// Reference to the DialogueBehaviour component
-    /// </summary>
-    // [SerializeField]
-    // private DialogueBehaviour dialogueSystem;
-    
-    /// <summary>
-    /// Whether the player is in range to interact
-    /// </summary>
-    private bool playerInRange = false;
     
     /// <summary>
     /// Reference to the player GameObject
@@ -23,24 +13,52 @@ public class WalletBehaviour : MonoBehaviour
 
     Material walletOriginalMaterial;
     MeshRenderer walletMeshRenderer;
-    [SerializeField]
-    LevelLoader levelLoader;
+
     [SerializeField]
     int sceneIndex;
+    /// <summary>
+    /// Reference to the LevelLoader component.
+    /// </summary>
+    LevelLoader levelLoader;
 
     void Start()
+    {
+        // Get the LevelLoader component from GameManager
+        levelLoader = GameManager.instance.GetLevelLoader();
+        if (levelLoader == null)
         {
-            // // Find the dialogue system if not assigned
-            // if (dialogueSystem == null)
-            // {
-            //     dialogueSystem = FindAnyObjectByType<DialogueBehaviour>();
-            // }
-            // Get the MeshRenderer component attached to this GameObject
-            // Store it in walletMeshRenderer
-            walletMeshRenderer = GetComponent<MeshRenderer>();
-            // Store the original material of the MeshRenderer
-            walletOriginalMaterial = walletMeshRenderer.material;
+            Debug.LogError("LevelLoader component not found on GameManager! Make sure it's attached.");
         }
+        // Get the MeshRenderer component attached to this GameObject
+        // Store it in walletMeshRenderer
+        walletMeshRenderer = GetComponent<MeshRenderer>();
+        // Store the original material of the MeshRenderer
+        walletOriginalMaterial = walletMeshRenderer.material;
+    }
+
+    // /// <summary>
+    // /// Get the LevelLoader dynamically from GameManager's children
+    // /// </summary>
+    // private LevelLoader GetLevelLoader()
+    // {
+    //     // First try to get LevelLoader component directly on GameManager
+    //     LevelLoader loader = GameManager.instance.GetComponent<LevelLoader>();
+    //     if (loader != null)
+    //     {
+    //         loader = GameManager.instance.GetComponentInChildren<LevelLoader>();
+    //         if (loader == null)
+    //         {
+    //             Debug.LogError("LevelLoader component not found on GameManager!");
+    //         }
+    //         return loader;
+    //     }
+        
+    //     else
+    //     {
+    //         Debug.LogError("GameManager.instance is null! Make sure GameManager exists in the scene.");
+    //         return null;
+    //     }
+    // }
 
     /// <summary>
     /// Highlights the hazard by changing its material.
@@ -58,69 +76,27 @@ public class WalletBehaviour : MonoBehaviour
         walletMeshRenderer.material = walletOriginalMaterial;
     }
     
-
-    void Update()
-    {
-        // Check for interaction input when player is in range
-        if (playerInRange && Input.GetKeyDown(KeyCode.E))
-        {
-            PickUpWallet();
-        }
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            player = other.gameObject;
-            playerInRange = true;
-            
-            // Show interact message
-            if (GameManager.instance != null)
-            {
-                GameManager.instance.ShowInteractMsg();
-            }
-        }
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            playerInRange = false;
-            
-            // Hide interact message
-            if (GameManager.instance != null)
-            {
-                GameManager.instance.HideInteractMsg();
-            }
-        }
-    }
-
     public void PickUpWallet()
     {
+        Debug.Log("Wallet picked up! Loading scene: " + sceneIndex);
+        
         // Hide interact message immediately
         if (GameManager.instance != null)
         {
             GameManager.instance.HideInteractMsg();
         }
 
-        // // Start dialogue
-        // if (dialogueSystem != null)
-        // {
-        //     dialogueSystem.SetDialogueActive(true);
-        // }
+        // Get LevelLoader dynamically
+        LevelLoader levelLoader = GameManager.instance.GetLevelLoader();
 
-        // Notify GameManager that rubbish was collected (if this wallet counts as rubbish)
-        if (GameManager.instance != null)
+        if (levelLoader != null)
         {
-            GameManager.instance.RubbishCollected();
+            // Load the target scene
+            StartCoroutine(levelLoader.LoadLevel(sceneIndex));
         }
-
-        // // Disable this pickup object
-        // gameObject.SetActive(false);
-        
-        // Load the "ending" scene
-        StartCoroutine(levelLoader.LoadLevel(sceneIndex));
+        else
+        {
+            Debug.LogError("LevelLoader not found!");
+        }
     }
 }
