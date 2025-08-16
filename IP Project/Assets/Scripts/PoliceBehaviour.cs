@@ -7,19 +7,12 @@ public class PoliceBehaviour : MonoBehaviour
     public enum State { Idle, FollowPlayer }
     public State currentState;
     NavMeshAgent myAgent;
-    [SerializeField]
     Transform targetTransform;
-
-    private string currentState;
-    
     /// <summary>
     /// Flag to determine if police should chase the player
     /// </summary>
     private bool shouldChasePlayer = false;
-
     Coroutine stateCoroutine;
-
-
     void Awake()
     {
         myAgent = GetComponent<NavMeshAgent>();
@@ -27,18 +20,23 @@ public class PoliceBehaviour : MonoBehaviour
 
     void Start()
     {
-
         // Check if player has visited the police station
         CheckPoliceStationStatus();
-        
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        if (playerObject != null)
+        {
+            targetTransform = playerObject.transform;
+        }
+        else
+        {
+            Debug.LogWarning("PoliceBehaviour: Could not find player!");
+        }
         if (shouldChasePlayer)
         {
-            currentState = "Idle";
             StartCoroutine(Idle());
         }
         else
         {
-            currentState = "Inactive";
             DeactivatePolice();
         }
     }
@@ -69,12 +67,12 @@ public class PoliceBehaviour : MonoBehaviour
         {
             myAgent.enabled = false;
         }
-        
-        // You can add additional deactivation logic here:
-        // - Disable animations
-        // - Set different material/shader
-        // - Play idle animation
-        
+        // Stop any running state coroutines
+        if (stateCoroutine != null)
+        {
+            StopCoroutine(stateCoroutine);
+            stateCoroutine = null;
+        }
         Debug.Log("Police deactivated");
     }
 
@@ -89,7 +87,7 @@ public class PoliceBehaviour : MonoBehaviour
         }
         
         shouldChasePlayer = true;
-        currentState = "Idle";
+        currentState = State.Idle;
         StartCoroutine(Idle());
         
         Debug.Log("Police activated and will now chase player");
@@ -106,8 +104,11 @@ public class PoliceBehaviour : MonoBehaviour
             PlayerPrefs.Save();
             ActivatePolice();
         }
-        myAgent = GetComponent<NavMeshAgent>();
-        SwitchState(State.Idle);
+        else
+        {
+            // Already active, just switch to idle state
+            SwitchState(State.Idle);
+        }
     }
 
     IEnumerator Idle()
@@ -139,7 +140,7 @@ public class PoliceBehaviour : MonoBehaviour
 
     IEnumerator FollowPlayer()
     {
-        while (currentState == State.FollowPlayer  && shouldChasePlayer))
+        while (currentState == State.FollowPlayer  && shouldChasePlayer)
         {
             if (targetTransform != null)
             {
@@ -163,6 +164,8 @@ public class PoliceBehaviour : MonoBehaviour
     {
         PlayerPrefs.DeleteKey("VisitedPoliceStation");
         PlayerPrefs.Save();
+        shouldChasePlayer = false;
+        DeactivatePolice();
         Debug.Log("Police station visit status reset");
     }
 }
