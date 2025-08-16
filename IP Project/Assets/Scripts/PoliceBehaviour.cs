@@ -4,15 +4,21 @@ using UnityEngine.AI;
 
 public class PoliceBehaviour : MonoBehaviour
 {
+    public enum State { Idle, FollowPlayer }
+    public State currentState;
     NavMeshAgent myAgent;
     [SerializeField]
     Transform targetTransform;
+
     private string currentState;
     
     /// <summary>
     /// Flag to determine if police should chase the player
     /// </summary>
     private bool shouldChasePlayer = false;
+
+    Coroutine stateCoroutine;
+
 
     void Awake()
     {
@@ -21,6 +27,7 @@ public class PoliceBehaviour : MonoBehaviour
 
     void Start()
     {
+
         // Check if player has visited the police station
         CheckPoliceStationStatus();
         
@@ -99,37 +106,50 @@ public class PoliceBehaviour : MonoBehaviour
             PlayerPrefs.Save();
             ActivatePolice();
         }
+        myAgent = GetComponent<NavMeshAgent>();
+        SwitchState(State.Idle);
     }
 
     IEnumerator Idle()
     {
-        while (currentState == "Idle" && shouldChasePlayer)
+        while (currentState == State.Idle  && shouldChasePlayer)
         {
-            yield return null;
+            // If target appears, switch state once
             if (targetTransform != null)
             {
-                StartCoroutine(SwitchState("FollowPlayer"));
+                SwitchState(State.FollowPlayer);
+                yield break; // exit this coroutine
             }
+            yield return null;
         }
     }
 
-    IEnumerator SwitchState(string newState)
+    void SwitchState(State newState)
     {
-        if (currentState == newState)
-        {
-            yield break;
-        }
+        if (stateCoroutine != null)
+            StopCoroutine(stateCoroutine);
+
         currentState = newState;
-        StartCoroutine(currentState);
+
+        if (newState == State.Idle)
+            stateCoroutine = StartCoroutine(Idle());
+        else if (newState == State.FollowPlayer)
+            stateCoroutine = StartCoroutine(FollowPlayer());
     }
 
     IEnumerator FollowPlayer()
     {
-        while (currentState == "FollowPlayer" && shouldChasePlayer)
+        while (currentState == State.FollowPlayer  && shouldChasePlayer))
         {
             if (targetTransform != null)
             {
                 myAgent.SetDestination(targetTransform.position);
+            }
+            else
+            {
+                // Lost target, go back to Idle
+                SwitchState(State.Idle);
+                yield break;
             }
             yield return null;
         }

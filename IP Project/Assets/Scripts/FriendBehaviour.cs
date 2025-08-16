@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-
+using System.Collections;
 public class FriendBehaviour: MonoBehaviour
 {
     public enum State { Following, Leaving, LeftDueToPolice }
