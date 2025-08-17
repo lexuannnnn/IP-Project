@@ -26,7 +26,15 @@ Clean up the park - Pick up (Interact) all the rubbish around the park
 Drag & Drop (Poster Puzzle) – Click and hold to pick up a piece, move to correct slot.
 
 ## Limitations / Bugs
-Camera clipping can occur when the player stands too close to walls. In some missions, NPC pathfinding can get stuck on corners or narrow spaces. Lack of mobile optimization — controls are PC-focused. Some dialogue text may overlap in smaller resolutions.
+Camera clipping can occur when the player stands too close to walls. 
+
+Players cannot jump, as doing so causes them to float away.
+
+In some missions, NPC pathfinding can get stuck on corners or narrow spaces. 
+
+Lack of mobile optimization — controls are PC-focused. 
+
+Some dialogue text may overlap in smaller resolutions.
 
 ## FSM Diagram & AI Implementation Details
 ### Uses of FSM:
@@ -37,6 +45,8 @@ John (Friend 2)
 
 Police Officer
 
+Citizen
+
 ### States:
 Idle – Standing, looking around.
 
@@ -44,7 +54,7 @@ Follow – Walk behind user.
 
 Unfollow - Stop following user, lingering around.
 
-###FSM Diagram
+### FSM Diagram
 
 ### Implementation:
 
@@ -69,11 +79,11 @@ Poster Puzzle (From top left to bottom left to top right to bottom right):
 
 
 ## References & Credits
-Character Inspiration:
+### Character Inspiration:
 
-Thoughtful Bunch by LTA https://www.lta.gov.sg/content/ltagov/en/getting_around/public_transport/a_better_public_transport_experience/gracious_commuting.html
+Thoughtful Bunch by [LTA](https://www.lta.gov.sg/content/ltagov/en/getting_around/public_transport/a_better_public_transport_experience/gracious_commuting.html)
 
-Fonts from Google Fonts:
+### Fonts from Google Fonts:
 
 Poppins - https://fonts.google.com/specimen/Poppins/license
 
@@ -81,3 +91,11 @@ Sound effects from Freesound – Licensed under CC0 / CC-BY
 
 Poster puzzle images sourced from [Singapore Police Force Public Awareness Materials]
 
+### Tutorials
+Unity AUDIO MIXER and Unity AUDIO Volume Settings Menu tutorials by [Rehope Games](https://www.youtube.com/@RehopeGames)
+
+Start Menu and Transitions tutorial by [Brackeys](https://www.youtube.com/@Brackeys)
+
+Spawn Car Prefabs and Destroy Prefabs tutorial by [Unity Learn](https://learn.unity.com/project/unit-2-basic-gameplay?uv=6&courseId=5cf96c41edbc2a2ca6e8810f)
+
+Dialogue System tutorial by [BMo](https://www.youtube.com/@BMoDev)
