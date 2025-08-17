@@ -72,7 +72,7 @@ Police
 <img width="470" height="175" alt="Screenshot 2025-08-17 194318" src="https://github.com/user-attachments/assets/7c765e2a-1bba-4919-b6e3-14daa0b9300a" />
 
 ### Implementation:
-Citizen - The citizen cycles through a list of walkPoints, moving to each point in order. When the citizen reaches a waypoint, it idles for a specified time before moving on.
+Citizen - The citizen cycles through a list of walk points, moving to each point in order. When the citizen reaches a waypoint, it idles for a specified time before moving on.
 ```csharp
 IEnumerator Patrol()
     {
@@ -160,7 +160,7 @@ Friend - The friend follows the player, when the friend reaches a specific place
     }
 ```
 
-Police - The police is initially inactive unless the player has visited the police station. When activated, the police switches between idle and chasing states, now chasing the player by continuously setting the destination to the player's position. If the player is lost or the police is deactivated, it returns to idle or stops moving.
+Police - The police will idle unless the player has visited the police station. When activated, the police switches between idle and following states, following them. If the player is lost or the police is deactivated, it returns to idle.
 ```csharp
     void CheckPoliceStationStatus()
     {
