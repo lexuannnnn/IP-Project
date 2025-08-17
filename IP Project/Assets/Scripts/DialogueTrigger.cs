@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DialogueTrigger : MonoBehaviour
 {
-   
+
     [Header("Dialogue Data")]
     /// <summary>
     /// Array of dialogue sentences for this trigger.
@@ -29,12 +29,11 @@ public class DialogueTrigger : MonoBehaviour
     [SerializeField]
     bool triggerOnce = true;
 
-    // /// <summary>
-    // /// Custom interaction message to show when near this trigger
-    // /// </summary>
-    // [SerializeField]
-    // string interactionMessage = "Press E to interact";
-
+    /// <summary>
+    /// Require police station visit before this dialogue can trigger
+    /// </summary>
+    [SerializeField]
+    bool requirePoliceStationVisit = false;
     /// <summary>
     /// Reference to the DialogueBehaviour component (will be found automatically)
     /// </summary>
@@ -86,31 +85,33 @@ public class DialogueTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = true;
-            
+
             if (autoTrigger)
             {
                 TriggerDialogue();
             }
-            // else
-            // {
-            //     // Show interaction message for manual triggers
-            //     ShowInteractionMessage();
-            // }
         }
     }
+    /// <summary>
+    /// Check if police station visit requirement is met
+    /// </summary>
+    bool CanTriggerDialogue()
+    {
+        // Check if police station visit requirement is met
+        if (!requirePoliceStationVisit)
+        {
+            return true; // No police station requirement
+        }
 
-    // void OnTriggerExit(Collider other)
-    // {
-    //     if (other.CompareTag("Player"))
-    //     {
-    //         playerInRange = false;
-            
-    //         if (!autoTrigger)
-    //         {
-    //             HideInteractionMessage();
-    //         }
-    //     }
-    // }
+        if (GameManager.hasVisitedPoliceStation)
+        {
+            return true; // Police station visited
+        }
+
+        // Police station not visited yet
+        Debug.Log($"Dialogue trigger blocked on {gameObject.name} - police station not visited");
+        return false;
+    }
 
     /// <summary>
     /// Trigger the dialogue if conditions are met
@@ -121,6 +122,11 @@ public class DialogueTrigger : MonoBehaviour
         if (triggerOnce && hasTriggered)
         {
             return;
+        }
+        // Check police station visit requirement
+        if (!CanTriggerDialogue())
+        {
+            return; // Exit early if police station requirement not met
         }
 
         // Check if dialogue system is available
@@ -139,35 +145,9 @@ public class DialogueTrigger : MonoBehaviour
 
         // Mark as triggered
         hasTriggered = true;
-
-        // Hide interaction message
-        // HideInteractionMessage();
-
         // Start the dialogue
         dialogueBehaviour.StartDialogue(dialogueSentences, characterNames);
     }
-
-    // /// <summary>
-    // /// Show interaction message
-    // /// </summary>
-    // void ShowInteractionMessage()
-    // {
-    //     if (GameManager.instance != null)
-    //     {
-    //         GameManager.instance.ShowInteractMsg(interactionMessage);
-    //     }
-    // }
-
-    // /// <summary>
-    // /// Hide interaction message
-    // /// </summary>
-    // void HideInteractionMessage()
-    // {
-    //     if (GameManager.instance != null)
-    //     {
-    //         GameManager.instance.HideInteractMsg();
-    //     }
-    // }
 
     /// <summary>
     /// Reset the trigger so it can be activated again
@@ -196,5 +176,22 @@ public class DialogueTrigger : MonoBehaviour
         characterNames = newNames;
         hasTriggered = false; // Reset trigger when setting new dialogue
     }
-}
+    
+    /// <summary>
+    /// Enable or disable police station visit requirement
+    /// </summary>
+    /// <param name="required">Whether police station visit is required</param>
+    public void SetPoliceStationRequired(bool required)
+    {
+        requirePoliceStationVisit = required;
+    }
 
+    /// <summary>
+    /// Check if this dialogue can currently be triggered
+    /// </summary>
+    /// <returns>True if dialogue can be triggered</returns>
+    public bool IsAvailable()
+    {
+        return CanTriggerDialogue() && (!triggerOnce || !hasTriggered);
+    }
+}
