@@ -8,19 +8,23 @@ public class FriendBehaviour: MonoBehaviour
     public State currentState;
     Transform player;
     public Transform exitPoint;
+    public Transform halfwayPoint;
     public GameObject dialoguebox;
     private NavMeshAgent agent;
     private Coroutine dialogueCoroutine;
 
+    /// <summary>
+    /// Initialize the friend behavior.
+    /// </summary>
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         if (player == null)
         {
-            GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+            GameObject playerObject = GameObject.FindGameObjectWithTag("Player"); // Find the player object
             if (playerObject != null)
             {
-                player = playerObject.transform;
+                player = playerObject.transform; // Assign the player transform
             }
             if (player == null)
             {
@@ -36,35 +40,36 @@ public class FriendBehaviour: MonoBehaviour
             }
             else
             {
-                currentState = State.Following;
+                currentState = State.Following; // Friend will continue following the player
             }
-        
-        if (dialoguebox != null)
+
+        if (dialoguebox != null) // Check if dialogue box is assigned
         {
-            dialoguebox.SetActive(false);
+            dialoguebox.SetActive(false); // Hide the dialogue box
         }
     }
 
+    /// <summary>
+    /// Called when the friend enters a trigger collider.
+    /// </summary>
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("HalfwayPoint") && currentState == State.Following)
+        if (other.CompareTag("HalfwayPoint") && currentState == State.Following) // Check if the friend is following the player and enters the halfway point
         {
             if (dialoguebox != null)
             {
                 if (dialogueCoroutine != null)
                 {
-                    StopCoroutine(dialogueCoroutine);
+                    StopCoroutine(dialogueCoroutine); // Stop any existing dialogue coroutine
                 }
-                dialogueCoroutine = StartCoroutine(ShowDialogueForSeconds(3f));
+                dialogueCoroutine = StartCoroutine(ShowDialogueForSeconds(3f)); // Show dialogue for 3 seconds
             }
             currentState = State.Leaving;
         }
-        else if (other.CompareTag("ExitPoint"))
-        {
-            Destroy(gameObject);
-        }
     }
-
+    /// <summary>
+    /// Show dialogue for a specified duration
+    /// </summary>
     private IEnumerator ShowDialogueForSeconds(float duration)
     {
         if (dialoguebox != null)
@@ -74,7 +79,9 @@ public class FriendBehaviour: MonoBehaviour
             dialoguebox.SetActive(false);
         }
     }
-
+    /// <summary>
+    /// Update the friend behavior depending on the situation
+    /// </summary>
     void Update()
     {
         switch (currentState)
@@ -86,15 +93,14 @@ public class FriendBehaviour: MonoBehaviour
                 }
                 break;
                 
-            case State.Leaving:
             case State.LeftDueToPolice:
                 if (exitPoint != null)
                 {
                     agent.SetDestination(exitPoint.position);
-                    
-                    if (Vector3.Distance(transform.position, exitPoint.position) < 3f)
+
+                    if (Vector3.Distance(transform.position, exitPoint.position) < 3f) // Check if the friend is close to the exit point
                     {
-                        Destroy(gameObject);
+                        Destroy(gameObject); // Destroy the friend object
                     }
                 }
                 break;
