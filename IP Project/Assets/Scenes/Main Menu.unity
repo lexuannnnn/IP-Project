@@ -546,6 +546,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 408935424}
   m_CullTransparentMesh: 1
+--- !u!82 &506039194 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4586634903267986595, guid: eb65304e54e13f249838f7f88e2cb957, type: 3}
+  m_PrefabInstance: {fileID: 346098479447549726}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &780055360
 GameObject:
   m_ObjectHideFlags: 0
@@ -977,6 +982,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 967398210}
   m_CullTransparentMesh: 1
+--- !u!1 &1144233384 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7556996097872965346, guid: eb65304e54e13f249838f7f88e2cb957, type: 3}
+  m_PrefabInstance: {fileID: 346098479447549726}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1159857189
 GameObject:
   m_ObjectHideFlags: 0
@@ -3268,7 +3278,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2352401035896485808, guid: eb65304e54e13f249838f7f88e2cb957, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1536533224}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7556996097872965346, guid: eb65304e54e13f249838f7f88e2cb957, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 346098479447549730}
   m_SourcePrefab: {fileID: 100100000, guid: eb65304e54e13f249838f7f88e2cb957, type: 3}
 --- !u!224 &346098479447549727 stripped
 RectTransform:
@@ -3280,6 +3293,24 @@ AudioSource:
   m_CorrespondingSourceObject: {fileID: 2386644718374659492, guid: eb65304e54e13f249838f7f88e2cb957, type: 3}
   m_PrefabInstance: {fileID: 346098479447549726}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &346098479447549730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1144233384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc5900e16d8046449809e756247b2d76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicSource: {fileID: 506039194}
+  brokenLightSource: {fileID: 346098479447549728}
+  fountainSource: {fileID: 1536533225}
+  background: {fileID: 8300000, guid: 3a109f415cee1e24990f06d1d0fff300, type: 3}
+  brokenLight: {fileID: 8300000, guid: 3dd87e0206515ac4a8696e34ca8a6c77, type: 3}
+  fountain: {fileID: 8300000, guid: ba6d3b21576fd434d9488795c196bdb3, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
