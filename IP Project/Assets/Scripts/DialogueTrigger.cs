@@ -195,4 +195,3 @@ public class DialogueTrigger : MonoBehaviour
         return CanTriggerDialogue() && (!triggerOnce || !hasTriggered);
     }
 }
-

@@ -570,6 +570,7 @@ MonoBehaviour:
   - Benny
   autoTrigger: 1
   triggerOnce: 1
+  requirePoliceStationVisit: 0
 --- !u!65 &559828625
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1578,7 +1579,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8356671656204901806, guid: 4f778a8708235644d848abae76b494c9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.71
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8356671656204901806, guid: 4f778a8708235644d848abae76b494c9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1586,7 +1587,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8356671656204901806, guid: 4f778a8708235644d848abae76b494c9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6
+      value: 6.46
       objectReference: {fileID: 0}
     - target: {fileID: 8356671656204901806, guid: 4f778a8708235644d848abae76b494c9, type: 3}
       propertyPath: m_LocalRotation.w
