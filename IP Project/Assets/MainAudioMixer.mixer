@@ -1,24 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!243 &-4934981309710103389
-AudioMixerGroupController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Fountain
-  m_AudioMixer: {fileID: 24100000}
-  m_GroupID: c7810668a599e2d44933e4dc74af37cf
-  m_Children: []
-  m_Volume: 4bea48a88f69e4b499ab9b1506f78472
-  m_Pitch: 7f792794f9d436949a76630854fd8fbc
-  m_Send: 00000000000000000000000000000000
-  m_Effects:
-  - {fileID: 2575158664590830073}
-  m_UserColorIndex: 0
-  m_Mute: 0
-  m_Solo: 0
-  m_BypassEffects: 0
 --- !u!244 &-3420885628139691801
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
@@ -63,18 +44,15 @@ AudioMixerController:
   m_EnableSuspend: 1
   m_UpdateMode: 0
   m_ExposedParameters:
-  - guid: 5cfdc64d524f96c41b04b9bbfaed7c7f
-    name: BrokenLight
-  - guid: 4bea48a88f69e4b499ab9b1506f78472
-    name: Fountain
   - guid: 683b0ebd6cc25db4f9cc938e3cfbf7dc
     name: Music
+  - guid: 5cfdc64d524f96c41b04b9bbfaed7c7f
+    name: SFX
   m_AudioMixerGroupViews:
   - guids:
     - c8bbc9f7d5d48f04fb77e991b836ab89
     - a69662bd797d40f43b09e9c07e54fc9c
     - 06aee7011d62c554fb0a11c8d57ee46e
-    - c7810668a599e2d44933e4dc74af37cf
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -89,8 +67,6 @@ AudioMixerGroupController:
   m_GroupID: c8bbc9f7d5d48f04fb77e991b836ab89
   m_Children:
   - {fileID: 4334899494795792003}
-  - {fileID: 3361727933779162073}
-  - {fileID: -4934981309710103389}
   m_Volume: 822c50d3ac91e8640adfacf6c84f0477
   m_Pitch: 5984ceed3eee16447b1a17e5b5e12ecf
   m_Send: 00000000000000000000000000000000
@@ -128,27 +104,13 @@ AudioMixerSnapshotController:
     5cfdc64d524f96c41b04b9bbfaed7c7f: 20
     683b0ebd6cc25db4f9cc938e3cfbf7dc: 0.0005750209
   m_TransitionOverrides: {}
---- !u!244 &2575158664590830073
-AudioMixerEffectController:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Attenuation
-  m_EffectID: 4d270483074570e46b66c6d5e48381bd
-  m_EffectName: Attenuation
-  m_MixLevel: 4bc2116712bea264f89ce4038af8dd85
-  m_Parameters: []
-  m_SendTarget: {fileID: 0}
-  m_EnableWetMix: 0
-  m_Bypass: 0
 --- !u!243 &3361727933779162073
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BrokenLight
+  m_Name: SFX
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 06aee7011d62c554fb0a11c8d57ee46e
   m_Children: []
@@ -170,7 +132,8 @@ AudioMixerGroupController:
   m_Name: Music
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: a69662bd797d40f43b09e9c07e54fc9c
-  m_Children: []
+  m_Children:
+  - {fileID: 3361727933779162073}
   m_Volume: 683b0ebd6cc25db4f9cc938e3cfbf7dc
   m_Pitch: 08fb4645348c3be4180b192a01d2e011
   m_Send: 00000000000000000000000000000000
