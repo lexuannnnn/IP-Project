@@ -6,18 +6,13 @@ public class AudioManager : MonoBehaviour
     [Header("Audio Sources")]
     [SerializeField]
     AudioSource musicSource;
-    
     [SerializeField]
-    AudioSource brokenLightSource;
-
-    [SerializeField]
-    AudioSource fountainSource;
+    AudioSource SFXSource;
 
     [Header("Audio Clips")]
     public AudioClip background;
     public AudioClip brokenLight;
-    public AudioClip fountain;
-
+    
 
     /// <summary>
     /// Play background music on awake
@@ -28,13 +23,8 @@ public class AudioManager : MonoBehaviour
         musicSource.Play();
     }
 
-    public void PlayBrokenLightSFX(AudioClip clip)
+    public void PlaySFX(AudioClip clip)
     {
-        brokenLightSource.PlayOneShot(clip);
-    }
-
-    public void PlayFountainSFX(AudioClip clip)
-    {
-        fountainSource.PlayOneShot(clip);
+        SFXSource.PlayOneShot(clip);
     }
 }

@@ -76,6 +76,6 @@ public class BrokenLightBehaviour : MonoBehaviour
     /// </summary>
     public void PlayLightSound()
     {
-        audioManager.PlayFountainSFX(audioManager.brokenLight);
+        audioManager.PlaySFX(audioManager.brokenLight);
     }
 }
