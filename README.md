@@ -16,6 +16,8 @@ E - Interact
 
 Shift + WASD - Sprint
 
+Space – Jump
+
 Mouse – Look Around
 
 Left Mouse Button – Skip dialogue animation
